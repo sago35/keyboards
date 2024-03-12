@@ -1,3 +1,6 @@
 [submodule "lib/foostan/kbd"]
 	path = lib/foostan/kbd
 	url = https://github.com/foostan/kbd
+[submodule "lib/crides/kleeb"]
+	path = lib/crides/kleeb
+	url = https://github.com/crides/kleeb
