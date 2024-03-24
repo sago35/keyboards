@@ -23,7 +23,29 @@ func main() {
 	}
 }
 
+var (
+	red   = []color.RGBA{{R: 0xFF, G: 0x00, B: 0x00}}
+	blue  = []color.RGBA{{R: 0x00, G: 0x00, B: 0xFF}}
+	white = []color.RGBA{{R: 0x33, G: 0x33, B: 0x33}}
+)
+
+func writeColors(ws ws2812.Device, c int) {
+	switch c {
+	case 1:
+		ws.WriteColors(blue)
+	case 2:
+		ws.WriteColors(red)
+	default:
+		ws.WriteColors(white)
+	}
+}
+
 func run() error {
+	neo := machine.NEOPIXEL
+	neo.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	ws := ws2812.New(neo)
+	ws.WriteColors(white)
+
 	d := keyboard.New()
 
 	colPins := []machine.Pin{
@@ -58,6 +80,7 @@ func run() error {
 	sm.SetCallback(func(layer, index int, state keyboard.State) {
 		layer = d.Layer()
 		fmt.Printf("sm: %d %d %d\n", layer, index, state)
+		writeColors(ws, layer)
 	})
 
 	uart := machine.UART0
@@ -84,16 +107,13 @@ func run() error {
 		},
 	})
 	uk.SetCallback(func(layer, index int, state keyboard.State) {
+		layer = d.Layer()
 		fmt.Printf("uk: %d %d %d\n", layer, index, state)
+		writeColors(ws, layer)
 	})
 
 	// override ctrl-h to BackSpace
 	d.OverrideCtrlH()
-
-	neo := machine.NEOPIXEL
-	neo.Configure(machine.PinConfig{Mode: machine.PinOutput})
-	ws := ws2812.New(neo)
-	ws.WriteColors([]color.RGBA{{R: 0x33, G: 0x33, B: 0x33}})
 
 	loadKeyboardDef()
 
