@@ -1,0 +1,6 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "foostan/kbd")(type "KiCad")(uri "${KIPRJMOD}/../../lib/foostan/kbd/kicad-footprints/kbd.pretty")(options "")(descr ""))
+  (lib (name "crides/kleeb/mcu")(type "KiCad")(uri "${KIPRJMOD}/../../lib/crides/kleeb/mcu.pretty")(options "")(descr ""))
+  (lib (name "sglib")(type "KiCad")(uri "C:/Users/sago3/dev/src/github.com/sago35/keyboards/lib/sglib.pretty")(options "")(descr ""))
+)
