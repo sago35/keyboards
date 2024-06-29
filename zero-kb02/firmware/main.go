@@ -157,6 +157,7 @@ func run() error {
 
 	loadKeyboardDef()
 
+	d.Init()
 	cont := true
 	x := NewADCDevice(ax, 0x3000, 0xC800, false)
 	y := NewADCDevice(ay, 0x3000, 0xC800, true)
