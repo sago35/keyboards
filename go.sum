@@ -2,6 +2,8 @@ github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 h1:El6M4kTTCOh6aBiKaU
 github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510/go.mod h1:pupxD2MaaD3pAXIBCelhxNneeOaAeabZDe5s4K6zSpQ=
 github.com/sago35/tinygo-keyboard v0.0.0-20240229115423-a1702f57f94c h1:QGQek8yLEEYdiniKZiBj+vjPaehmmBZ8SLzncg3H4Ek=
 github.com/sago35/tinygo-keyboard v0.0.0-20240229115423-a1702f57f94c/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
+github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53 h1:YDUOidAkmDtkKhwsAxolOy49L5RlJoKTSkjjzrKg8AQ=
+github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b h1:YPwCor6XMmAx/w+PReWGe+w64c8QEoIdyLzieww0Kps=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b/go.mod h1:LU7Dw00NJ+N86QkeTGjMLNkYcEYMor6wTDpTCu0EaH8=
 golang.org/x/exp v0.0.0-20231226003508-02704c960a9b h1:kLiC65FbiHWFAOu+lxwNPujcsl8VYyTYYEZnsOO1WK4=
