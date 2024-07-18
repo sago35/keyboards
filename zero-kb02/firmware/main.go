@@ -18,6 +18,10 @@ import (
 	"tinygo.org/x/drivers/ssd1306"
 )
 
+var (
+	invertRotaryPins = false
+)
+
 func main() {
 	usb.Product = "zero-kb02-0.1.0"
 
@@ -100,7 +104,15 @@ func run() error {
 		},
 	})
 
-	rk := d.AddRotaryKeyboard(machine.GPIO4, machine.GPIO3, [][]keyboard.Keycode{
+	rotaryPins := []machine.Pin{
+		machine.GPIO3,
+		machine.GPIO4,
+	}
+	if invertRotaryPins {
+		rotaryPins[0], rotaryPins[1] = rotaryPins[1], rotaryPins[0]
+	}
+
+	rk := d.AddRotaryKeyboard(rotaryPins[0], rotaryPins[1], [][]keyboard.Keycode{
 		{
 			jp.KeyMediaVolumeDec, jp.KeyMediaVolumeInc,
 		},
