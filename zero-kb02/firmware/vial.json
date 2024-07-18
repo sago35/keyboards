@@ -2,7 +2,7 @@
     "name": "tinygo-zero-kb02",
     "vendorId": "0x2e8a",
     "productId": "0x000a",
-    "matrix": {"rows": 4, "cols": 12},
+    "matrix": {"rows": 3, "cols": 12},
     "layouts": {
         "keymap": [
             [{"x":1.5}, {"x":1, "w":0.75}, "1,0", {"w":0.75}, "1,1"],

@@ -2,7 +2,7 @@
     "name": "sgh60",
     "vendorId": "0x2e8a",
     "productId": "0x0003",
-    "matrix": {"rows": 1, "cols": 28},
+    "matrix": {"rows": 2, "cols": 30},
     "layouts": {
         "keymap": [
             [
