@@ -31,20 +31,16 @@ func main() {
 	}
 }
 
-var (
-	white = color.RGBA{0x3F, 0x3F, 0x3F, 0xFF}
-	red   = color.RGBA{0xFF, 0x00, 0x00, 0xFF}
-	green = color.RGBA{0x00, 0xFF, 0x00, 0xFF}
-	blue  = color.RGBA{0x00, 0x00, 0xFF, 0xFF}
-	black = color.RGBA{0x00, 0x00, 0x00, 0xFF}
+const (
+	white = 0x3F3F3FFF
+	red   = 0x00FF00FF
+	green = 0xFF0000FF
+	blue  = 0x0000FFFF
+	black = 0x000000FF
 )
 
-func writeColors(s pio.StateMachine, ws *piolib.WS2812, colors []color.RGBA) {
-	for _, c := range colors {
-		for s.IsTxFIFOFull() {
-		}
-		ws.SetColor(c)
-	}
+func writeColors(s pio.StateMachine, ws *piolib.WS2812B, colors []uint32) {
+	ws.WriteRaw(colors)
 }
 
 func run() error {
@@ -68,8 +64,12 @@ func run() error {
 
 	wsPin := machine.GPIO1
 	s, _ := pio.PIO0.ClaimStateMachine()
-	ws, _ := piolib.NewWS2812(s, wsPin)
-	wsLeds := [12]color.RGBA{}
+	ws, _ := piolib.NewWS2812B(s, wsPin)
+	err := ws.EnableDMA(true)
+	if err != nil {
+		return err
+	}
+	wsLeds := [12]uint32{}
 	for i := range wsLeds {
 		wsLeds[i] = black
 	}
@@ -197,9 +197,10 @@ func run() error {
 		if cnt%32 == 0 {
 			mask := interrupt.Disable()
 			for i, c := range wsLeds {
-				c.B >>= 1
-				c.R >>= 1
-				c.G >>= 1
+				g := ((c & 0xFF000000) >> 1) & 0xFF000000
+				r := ((c & 0x00FF0000) >> 1) & 0x00FF0000
+				b := ((c & 0x0000FF00) >> 1) & 0x0000FF00
+				c = g | r | b | 0xFF
 				wsLeds[i] = c
 			}
 			writeColors(s, ws, wsLeds[:])
