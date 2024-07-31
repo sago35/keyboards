@@ -153,6 +153,9 @@ func run() error {
 		{
 			jp.KeyMediaVolumeDec, jp.KeyMediaVolumeInc,
 		},
+		{
+			jp.KeyLeft, jp.KeyRight,
+		},
 	})
 	rkIndex := 0
 	rk.SetCallback(func(layer, index int, state keyboard.State) {
@@ -198,7 +201,10 @@ func run() error {
 	}
 	gk := d.AddGpioKeyboard(gpioPins, [][]keyboard.Keycode{
 		{
-			jp.MouseLeft, jp.MouseRight,
+			jp.MouseLeft, jp.KeyTo1,
+		},
+		{
+			jp.MouseLeft, jp.KeyTo0,
 		},
 	})
 	gk.SetCallback(func(layer, index int, state keyboard.State) {
