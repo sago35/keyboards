@@ -7,6 +7,7 @@ import (
 	"machine"
 	"machine/usb"
 	"machine/usb/hid/mouse"
+	"math/rand/v2"
 	"runtime/interrupt"
 	"runtime/volatile"
 	"time"
@@ -96,12 +97,48 @@ func run() error {
 		machine.GPIO11,
 	}
 
-	d.AddMatrixKeyboard(colPins, rowPins, [][]keyboard.Keycode{
+	mk := d.AddMatrixKeyboard(colPins, rowPins, [][]keyboard.Keycode{
 		{
 			jp.KeyA, jp.KeyB, jp.KeyC, jp.KeyD,
 			jp.KeyE, jp.KeyF, jp.KeyG, jp.KeyH,
 			jp.KeyI, jp.KeyJ, jp.KeyK, jp.KeyL,
 		},
+	})
+	mk.SetCallback(func(layer, index int, state keyboard.State) {
+		if state == keyboard.PressToRelease {
+			return
+		}
+		mask := interrupt.Disable()
+		idx := 0
+		switch index {
+		case 0:
+			idx = 0
+		case 1:
+			idx = 3
+		case 2:
+			idx = 6
+		case 3:
+			idx = 9
+		case 4:
+			idx = 1
+		case 5:
+			idx = 4
+		case 6:
+			idx = 7
+		case 7:
+			idx = 10
+		case 8:
+			idx = 2
+		case 9:
+			idx = 5
+		case 10:
+			idx = 8
+		case 11:
+			idx = 11
+		}
+		wsLeds[idx] = rand.Uint32()
+		interrupt.Restore(mask)
+		changed.Set(1)
 	})
 
 	rotaryPins := []machine.Pin{
@@ -119,13 +156,11 @@ func run() error {
 	})
 	rkIndex := 0
 	rk.SetCallback(func(layer, index int, state keyboard.State) {
-		if state == 2 {
+		if state == keyboard.Press {
 			if index == 0 {
 				rkIndex = (rkIndex + 1) % 10
-				wsLeds[4] = red
 			} else {
 				rkIndex = (rkIndex - 1 + 10) % 10
-				wsLeds[7] = blue
 			}
 			idx := rkIndex
 			switch rkIndex {
@@ -151,7 +186,7 @@ func run() error {
 				idx = 3
 			}
 			mask := interrupt.Disable()
-			wsLeds[idx] = green
+			wsLeds[idx] = rand.Uint32()
 			interrupt.Restore(mask)
 			changed.Set(1)
 		}
@@ -161,10 +196,23 @@ func run() error {
 	for c := range gpioPins {
 		gpioPins[c].Configure(machine.PinConfig{Mode: machine.PinInputPullup})
 	}
-	d.AddGpioKeyboard(gpioPins, [][]keyboard.Keycode{
+	gk := d.AddGpioKeyboard(gpioPins, [][]keyboard.Keycode{
 		{
 			jp.MouseLeft, jp.MouseRight,
 		},
+	})
+	gk.SetCallback(func(layer, index int, state keyboard.State) {
+		if state == keyboard.PressToRelease {
+			return
+		}
+		mask := interrupt.Disable()
+		idx := 4
+		if index == 1 {
+			idx = 7
+		}
+		wsLeds[idx] = rand.Uint32()
+		interrupt.Restore(mask)
+		changed.Set(1)
 	})
 
 	loadKeyboardDef()
