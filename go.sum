@@ -6,6 +6,8 @@ github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53 h1:YDUOidAk
 github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b h1:YPwCor6XMmAx/w+PReWGe+w64c8QEoIdyLzieww0Kps=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b/go.mod h1:LU7Dw00NJ+N86QkeTGjMLNkYcEYMor6wTDpTCu0EaH8=
+github.com/tinygo-org/pio v0.0.0-20240626192653-0b4cbef45f9b h1:ahoIWyyWUM8F+eDRzA2FS7gKiu9Tk/Lyacv7z3nn+Fg=
+github.com/tinygo-org/pio v0.0.0-20240626192653-0b4cbef45f9b/go.mod h1:LU7Dw00NJ+N86QkeTGjMLNkYcEYMor6wTDpTCu0EaH8=
 golang.org/x/exp v0.0.0-20231226003508-02704c960a9b h1:kLiC65FbiHWFAOu+lxwNPujcsl8VYyTYYEZnsOO1WK4=
 golang.org/x/exp v0.0.0-20231226003508-02704c960a9b/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
 tinygo.org/x/drivers v0.27.0 h1:TEGk1lQvEhXxfvpEhUu+pwmCnhtldPI+hpHlO9VYixI=
