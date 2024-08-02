@@ -4,6 +4,8 @@ github.com/sago35/tinygo-keyboard v0.0.0-20240229115423-a1702f57f94c h1:QGQek8yL
 github.com/sago35/tinygo-keyboard v0.0.0-20240229115423-a1702f57f94c/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
 github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53 h1:YDUOidAkmDtkKhwsAxolOy49L5RlJoKTSkjjzrKg8AQ=
 github.com/sago35/tinygo-keyboard v0.0.0-20240416235145-066aa2b85a53/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
+github.com/sago35/tinygo-keyboard v0.0.0-20240801000429-80e67ab2d444 h1:upA/EBMxms0PV6Lr8Rz27nBSlAvFJkMU9q8AUceya2g=
+github.com/sago35/tinygo-keyboard v0.0.0-20240801000429-80e67ab2d444/go.mod h1:jFhDDtRipnSbvhoqlGrR2M7IInnjcMUzuSWznF6obqM=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b h1:YPwCor6XMmAx/w+PReWGe+w64c8QEoIdyLzieww0Kps=
 github.com/tinygo-org/pio v0.0.0-20240415005500-1eaed398ca4b/go.mod h1:LU7Dw00NJ+N86QkeTGjMLNkYcEYMor6wTDpTCu0EaH8=
 github.com/tinygo-org/pio v0.0.0-20240626192653-0b4cbef45f9b h1:ahoIWyyWUM8F+eDRzA2FS7gKiu9Tk/Lyacv7z3nn+Fg=
