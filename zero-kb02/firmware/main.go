@@ -101,7 +101,17 @@ func run() error {
 		{
 			jp.KeyA, jp.KeyB, jp.KeyC, jp.KeyD,
 			jp.KeyE, jp.KeyF, jp.KeyG, jp.KeyH,
+			jp.KeyMod1, jp.KeyMod2, jp.MouseLeft, jp.MouseRight,
+		},
+		{
 			jp.KeyI, jp.KeyJ, jp.KeyK, jp.KeyL,
+			jp.KeyM, jp.KeyN, jp.KeyO, jp.KeyP,
+			jp.KeyMod1, jp.KeyMod2, jp.MouseLeft, jp.MouseRight,
+		},
+		{
+			jp.KeyQ, jp.KeyR, jp.KeyS, jp.KeyT,
+			jp.KeyU, jp.KeyV, jp.KeyW, jp.KeyX,
+			jp.KeyMod1, jp.KeyMod2, jp.KeyY, jp.KeyZ,
 		},
 	})
 	mk.SetCallback(func(layer, index int, state keyboard.State) {
@@ -156,6 +166,9 @@ func run() error {
 		{
 			jp.KeyLeft, jp.KeyRight,
 		},
+		{
+			jp.KeyMediaBrightnessDown, jp.KeyMediaBrightnessUp,
+		},
 	})
 	rkIndex := 0
 	rk.SetCallback(func(layer, index int, state keyboard.State) {
@@ -202,6 +215,9 @@ func run() error {
 	gk := d.AddGpioKeyboard(gpioPins, [][]keyboard.Keycode{
 		{
 			jp.MouseLeft, jp.KeyTo1,
+		},
+		{
+			jp.MouseLeft, jp.KeyTo2,
 		},
 		{
 			jp.MouseLeft, jp.KeyTo0,
