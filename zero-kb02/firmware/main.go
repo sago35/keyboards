@@ -243,7 +243,6 @@ func run() error {
 	cont := true
 	x := NewADCDevice(ax, 0x3000, 0xC800, false)
 	y := NewADCDevice(ay, 0x3000, 0xC800, true)
-	ticker := time.Tick(1 * time.Millisecond)
 	cnt := 0
 
 	dispx := int16(0)
@@ -251,7 +250,7 @@ func run() error {
 	deltaX := int16(1)
 	deltaY := int16(1)
 	for cont {
-		<-ticker
+		time.Sleep(1 * time.Millisecond)
 		err := d.Tick()
 		if err != nil {
 			return err
