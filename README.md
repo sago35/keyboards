@@ -14,6 +14,7 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 ![](./images/zero-kb02.jpg)
 
 * [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fzero-kb02%2Fzero-kb02)
+* [case (stl / 3mf)](./zero-kb02/stl/)
 * workshop - https://github.com/sago35/tinygo_keeb_workshop_2024
 
 ### pinout
