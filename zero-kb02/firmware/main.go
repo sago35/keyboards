@@ -47,7 +47,7 @@ func writeColors(s pio.StateMachine, ws *piolib.WS2812B, colors []uint32) {
 func run() error {
 	i2c := machine.I2C0
 	i2c.Configure(machine.I2CConfig{
-		Frequency: machine.TWI_FREQ_400KHZ,
+		Frequency: 2.8 * machine.MHz,
 		SDA:       machine.GPIO12,
 		SCL:       machine.GPIO13,
 	})
