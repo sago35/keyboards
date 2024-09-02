@@ -19,6 +19,6 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 
 ### pinout
 
-![](./images/pinout01.png)
+![](./images/pinout01.jpg)
 
 ![](./images/pinout02.png)
