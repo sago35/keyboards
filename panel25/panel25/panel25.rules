@@ -1,0 +1,86 @@
+
+(rules PCB panel25
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 2639)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clearance 200.2)
+    (clearance 125.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.2 (type "kicad_default"))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    ROW1 "Net-(D1-A)" "Net-(D2-A)" "Net-(D3-A)" "Net-(D4-A)" "Net-(D5-A)" ROW2 "Net-(D6-A)"
+    "Net-(D7-A)" "Net-(D8-A)" "Net-(D9-A)" "Net-(D10-A)" ROW3 "Net-(D11-A)" "Net-(D12-A)" "Net-(D13-A)"
+    "Net-(D14-A)" "Net-(D15-A)" ROW4 "Net-(D16-A)" "Net-(D17-A)" "Net-(D18-A)" "Net-(D19-A)" "Net-(D20-A)"
+    ROW5 "Net-(D21-A)" "Net-(D22-A)" "Net-(D23-A)" "Net-(D24-A)" "Net-(D25-A)" "RGB_Vcc" "RGB LED IN"
+    "RGB LED OUT" GND "Net-(LED1-DOUT)" "Net-(LED2-DOUT)" "Net-(LED3-DOUT)" "Net-(LED4-DOUT)" "Net-(LED5-DOUT)" "Net-(LED6-DOUT)"
+    "Net-(LED7-DOUT)" "Net-(LED8-DOUT)" "Net-(LED10-DIN)" "Net-(LED10-DOUT)" "Net-(LED11-DOUT)" "Net-(LED12-DOUT)" "Net-(LED13-DOUT)" "Net-(LED14-DOUT)"
+    "Net-(LED15-DOUT)" "Net-(LED16-DOUT)" "Net-(LED17-DOUT)" "Net-(LED18-DOUT)" "Net-(LED19-DOUT)" "Net-(LED20-DOUT)" "Net-(LED21-DOUT)" "Net-(LED22-DOUT)"
+    "Net-(LED23-DOUT)" "Net-(LED24-DOUT)" COL1 COL2 COL3 COL4 COL5 ROW6
+    ROW7 "U0TX_I2C0SDA" "U0RX_I2C0SCL" "unconnected-(U1-14-Pad15)" "unconnected-(U1-15-Pad16)" WS2812 ROW8 ROW9
+    ROW10 3V3 5V
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
