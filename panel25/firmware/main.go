@@ -1,16 +1,20 @@
 package main
 
 import (
-	"context"
 	_ "embed"
+	"image/color"
 	"log"
 	"machine"
 	"machine/usb"
+	"runtime"
+	"time"
 
 	keyboard "github.com/sago35/tinygo-keyboard"
 	"github.com/sago35/tinygo-keyboard/keycodes/jp"
 	pio "github.com/tinygo-org/pio/rp2-pio"
 	"github.com/tinygo-org/pio/rp2-pio/piolib"
+	"tinygo.org/x/tinyfont"
+	"tinygo.org/x/tinyfont/proggy"
 )
 
 var (
@@ -93,5 +97,38 @@ func run() error {
 
 	loadKeyboardDef()
 
-	return d.Loop(context.Background())
+	err = d.Init()
+	if err != nil {
+		return err
+	}
+
+	cont := true
+	cnt := int16(0)
+	display := NewSK6812()
+	time.Sleep(2 * time.Second)
+	str := "HACK.BAR   "
+	for cont {
+		err := d.Tick()
+		if err != nil {
+			return err
+		}
+
+		for i := int16(0); i < 100; i++ {
+			display.SetPixel(i%10, i/10, color.RGBA{R: 0x00, G: 0x00, B: 0x00})
+		}
+
+		//x := cnt % 10
+		//y := cnt / 10
+		////println(cnt, x, y)
+		//display.SetPixel(x, y, color.RGBA{R: 0x00, G: 0x00, B: 0xFF})
+		tinyfont.WriteLine(display, &proggy.TinySZ8pt7b, 10+cnt*-1, 8, str, color.RGBA{R: 0x00, G: 0xFF, B: 0x00})
+
+		writeColors(s, ws, display.RawColors())
+		cnt = (cnt + 1) % 70
+		time.Sleep(100 * time.Millisecond)
+
+		runtime.Gosched()
+	}
+
+	return nil
 }
