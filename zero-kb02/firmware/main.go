@@ -10,17 +10,32 @@ import (
 	"math/rand/v2"
 	"runtime/interrupt"
 	"runtime/volatile"
+	"strconv"
 	"time"
 
 	keyboard "github.com/sago35/tinygo-keyboard"
 	"github.com/sago35/tinygo-keyboard/keycodes/jp"
 	pio "github.com/tinygo-org/pio/rp2-pio"
 	"github.com/tinygo-org/pio/rp2-pio/piolib"
+	"tinygo.org/x/drivers"
 	"tinygo.org/x/drivers/ssd1306"
+	"tinygo.org/x/tinyfont"
+	"tinygo.org/x/tinyfont/freemono"
+)
+
+const (
+	SCREENSAVER = iota
+	LAYER
 )
 
 var (
 	invertRotaryPins = false
+	currentLayer     = 0
+	displayShowing   = SCREENSAVER
+	displayFrame     = 0
+
+	textWhite = color.RGBA{255, 255, 255, 255}
+	textBlack = color.RGBA{0, 0, 0, 255}
 )
 
 func main() {
@@ -54,9 +69,10 @@ func run() error {
 
 	display := ssd1306.NewI2C(i2c)
 	display.Configure(ssd1306.Config{
-		Address: 0x3C,
-		Width:   128,
-		Height:  64,
+		Address:  0x3C,
+		Width:    128,
+		Height:   64,
+		Rotation: drivers.Rotation180,
 	})
 	display.ClearDisplay()
 
@@ -147,6 +163,11 @@ func run() error {
 			idx = 11
 		}
 		wsLeds[idx] = rand.Uint32()
+		if layer != d.Layer() {
+			displayFrame = 0
+			currentLayer = d.Layer()
+			displayShowing = LAYER
+		}
 		interrupt.Restore(mask)
 		changed.Set(1)
 	})
@@ -203,6 +224,11 @@ func run() error {
 			}
 			mask := interrupt.Disable()
 			wsLeds[idx] = rand.Uint32()
+			if layer != d.Layer() {
+				displayFrame = 0
+				currentLayer = d.Layer()
+				displayShowing = LAYER
+			}
 			interrupt.Restore(mask)
 			changed.Set(1)
 		}
@@ -233,6 +259,11 @@ func run() error {
 			idx = 7
 		}
 		wsLeds[idx] = rand.Uint32()
+		if layer != d.Layer() {
+			displayFrame = 0
+			currentLayer = d.Layer()
+			displayShowing = LAYER
+		}
 		interrupt.Restore(mask)
 		changed.Set(1)
 	})
@@ -277,24 +308,41 @@ func run() error {
 		}
 
 		if cnt%32 == 16 {
-			pixel := display.GetPixel(dispx, dispy)
-			c := color.RGBA{255, 255, 255, 255}
-			if pixel {
-				c = color.RGBA{0, 0, 0, 255}
-			}
-			display.SetPixel(dispx, dispy, c)
-			display.Display()
+			switch displayShowing {
+			case LAYER:
+				if displayFrame == 0 {
+					display.ClearDisplay()
+					_, w := tinyfont.LineWidth(&freemono.Regular12pt7b, "LAYER "+strconv.Itoa(currentLayer))
+					tinyfont.WriteLine(&display, &freemono.Regular12pt7b, int16(128-w)/2, 40, "LAYER "+strconv.Itoa(currentLayer), textWhite)
+					display.Display()
+				} else if displayFrame > 20 {
+					display.ClearDisplay()
+					display.Display()
+					displayShowing = SCREENSAVER
+				}
+				break
+			case SCREENSAVER:
+				pixel := display.GetPixel(dispx, dispy)
+				c := textWhite
+				if pixel {
+					c = textBlack
+				}
+				display.SetPixel(dispx, dispy, c)
+				display.Display()
 
-			dispx += deltaX
-			dispy += deltaY
+				dispx += deltaX
+				dispy += deltaY
 
-			if dispx == 0 || dispx == 127 {
-				deltaX = -deltaX
-			}
+				if dispx == 0 || dispx == 127 {
+					deltaX = -deltaX
+				}
 
-			if dispy == 0 || dispy == 63 {
-				deltaY = -deltaY
+				if dispy == 0 || dispy == 63 {
+					deltaY = -deltaY
+				}
+				break
 			}
+			displayFrame++
 		}
 
 		cnt++
