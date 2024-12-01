@@ -40,8 +40,8 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 | SDA0\_TX0 | machine.GPIO12 | I2C SDA
 | SCL0\_RX0 | machine.GPIO13 | I2C SCL
 | EX01      | machine.GPIO14 | GPIO
-| EX02      | machine.GPIO14 | GPIO
-| EX03      | machine.GPIO14 | GPIO / ADC
-| EX04      | machine.GPIO14 | GPIO / ADC
+| EX02      | machine.GPIO15 | GPIO
+| EX03      | machine.GPIO26 | GPIO / ADC
+| EX04      | machine.GPIO27 | GPIO / ADC
 | VR\_Y     | machine.GPIO28 | ADC
 | VR\_X     | machine.GPIO29 | ADC
