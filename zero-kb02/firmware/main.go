@@ -14,6 +14,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/sago35/koebiten"
+	"github.com/sago35/koebiten/games/all/all"
+	"github.com/sago35/koebiten/hardware"
 	keyboard "github.com/sago35/tinygo-keyboard"
 	"github.com/sago35/tinygo-keyboard/keycodes/jp"
 	pio "github.com/tinygo-org/pio/rp2-pio"
@@ -242,13 +245,13 @@ func run() error {
 	}
 	gk := d.AddGpioKeyboard(gpioPins, [][]keyboard.Keycode{
 		{
-			jp.MouseLeft, jp.KeyTo1,
+			jp.KeyTo5, jp.KeyTo1,
 		},
 		{
-			jp.MouseLeft, jp.KeyTo2,
+			jp.KeyTo5, jp.KeyTo2,
 		},
 		{
-			jp.MouseLeft, jp.KeyTo0,
+			jp.KeyTo5, jp.KeyTo0,
 		},
 	})
 	gk.SetCallback(func(layer, index int, state keyboard.State) {
@@ -329,15 +332,35 @@ func run() error {
 
 			switch displayShowing {
 			case LAYER:
-				if displayFrame == 0 {
+				if currentLayer == 5 {
 					display.ClearDisplay()
-					_, w := tinyfont.LineWidth(&freemono.Regular12pt7b, "LAYER "+strconv.Itoa(currentLayer))
-					tinyfont.WriteLine(&display, &freemono.Regular12pt7b, int16(128-w)/2, 40, "LAYER "+strconv.Itoa(currentLayer), textWhite)
-					display.Display()
-				} else if displayFrame > 20 {
-					display.ClearDisplay()
-					display.Display()
-					displayShowing = SCREENSAVER
+					for i := range wsLeds {
+						wsLeds[i] = black
+					}
+					writeColors(s, ws, wsLeds[:])
+
+					machine.GPIO3.SetInterrupt(machine.PinToggle, nil)
+					machine.GPIO4.SetInterrupt(machine.PinToggle, nil)
+
+					koebiten.SetHardware(hardware.Device)
+					koebiten.SetRotation(koebiten.Rotation0)
+
+					game := all.NewGame()
+					if err := koebiten.RunGame(game); err != nil {
+						log.Fatal(err)
+					}
+					game.RunCurrentGame()
+				} else {
+					if displayFrame == 0 {
+						display.ClearDisplay()
+						_, w := tinyfont.LineWidth(&freemono.Regular12pt7b, "LAYER "+strconv.Itoa(currentLayer))
+						tinyfont.WriteLine(&display, &freemono.Regular12pt7b, int16(128-w)/2, 40, "LAYER "+strconv.Itoa(currentLayer), textWhite)
+						display.Display()
+					} else if displayFrame > 20 {
+						display.ClearDisplay()
+						display.Display()
+						displayShowing = SCREENSAVER
+					}
 				}
 			case SCREENSAVER:
 				display.SetBuffer(displayBuffer.GetBuffer())
