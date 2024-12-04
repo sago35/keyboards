@@ -339,6 +339,9 @@ func run() error {
 					}
 					writeColors(s, ws, wsLeds[:])
 
+					machine.GPIO3.SetInterrupt(machine.PinToggle, nil)
+					machine.GPIO4.SetInterrupt(machine.PinToggle, nil)
+
 					koebiten.SetHardware(hardware.Device)
 					koebiten.SetRotation(koebiten.Rotation0)
 
