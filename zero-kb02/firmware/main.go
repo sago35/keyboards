@@ -435,19 +435,3 @@ func (d *DisplayBuffer) GetBuffer() []byte {
 var (
 	errBufferSize = errors.New("invalid size buffer")
 )
-
-type Device struct {
-	display *ssd1306.Device
-}
-
-func (d *Device) Init() error {
-	return nil
-}
-
-func (d *Device) GetDisplay() koebiten.Displayer {
-	return d.display
-}
-
-func (d *Device) KeyUpdate() error {
-	return nil
-}
