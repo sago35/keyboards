@@ -37,6 +37,7 @@ var (
 	currentLayer     = 0
 	displayShowing   = SCREENSAVER
 	displayFrame     = 0
+	koebitenEnable   = false
 
 	textWhite = color.RGBA{255, 255, 255, 255}
 	textBlack = color.RGBA{0, 0, 0, 255}
@@ -256,6 +257,9 @@ func run() error {
 	})
 	gk.SetCallback(func(layer, index int, state keyboard.State) {
 		if state == keyboard.PressToRelease {
+			if currentLayer == 5 {
+				koebitenEnable = true
+			}
 			return
 		}
 		mask := interrupt.Disable()
@@ -333,23 +337,25 @@ func run() error {
 			switch displayShowing {
 			case LAYER:
 				if currentLayer == 5 {
-					display.ClearDisplay()
-					for i := range wsLeds {
-						wsLeds[i] = black
+					if koebitenEnable {
+						display.ClearDisplay()
+						for i := range wsLeds {
+							wsLeds[i] = black
+						}
+						writeColors(s, ws, wsLeds[:])
+
+						machine.GPIO3.SetInterrupt(machine.PinToggle, nil)
+						machine.GPIO4.SetInterrupt(machine.PinToggle, nil)
+
+						koebiten.SetHardware(hardware.Device)
+						koebiten.SetRotation(koebiten.Rotation0)
+
+						game := all.NewGame()
+						if err := koebiten.RunGame(game); err != nil {
+							log.Fatal(err)
+						}
+						game.RunCurrentGame()
 					}
-					writeColors(s, ws, wsLeds[:])
-
-					machine.GPIO3.SetInterrupt(machine.PinToggle, nil)
-					machine.GPIO4.SetInterrupt(machine.PinToggle, nil)
-
-					koebiten.SetHardware(hardware.Device)
-					koebiten.SetRotation(koebiten.Rotation0)
-
-					game := all.NewGame()
-					if err := koebiten.RunGame(game); err != nil {
-						log.Fatal(err)
-					}
-					game.RunCurrentGame()
 				} else {
 					if displayFrame == 0 {
 						display.ClearDisplay()
