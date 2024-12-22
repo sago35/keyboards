@@ -13,7 +13,7 @@ require (
 
 require (
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
-	github.com/sago35/koebiten v0.1.1-0.20241203123720-42afdad3e215 // indirect
+	github.com/sago35/koebiten v0.1.1-0.20241222080708-e8e862a8a46e // indirect
 	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
 	tinygo.org/x/tinydraw v0.4.0 // indirect
 )
