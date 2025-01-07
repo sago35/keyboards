@@ -45,3 +45,9 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 | EX04      | machine.GPIO27 | GPIO / ADC
 | VR\_Y     | machine.GPIO28 | ADC
 | VR\_X     | machine.GPIO29 | ADC
+
+### matrix and leds
+
+The image below represents the relationship between the COL and ROW of the MATRIX wiring, as well as the order of the LEDs.
+It was created by [rdon_key](https://x.com/rdon_key).
+![](./images/zero-kb02-matrix-and-led.png)
