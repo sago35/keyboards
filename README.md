@@ -51,3 +51,11 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 The image below represents the relationship between the COL and ROW of the MATRIX wiring, as well as the order of the LEDs.
 It was created by [rdon_key](https://x.com/rdon_key).
 ![](./images/zero-kb02-matrix-and-led.png)
+
+## sg48key2
+
+![](./images/sg48key2.jpg)
+
+* [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fsg48key2%2Fsg48key2)
+  * Configuration of U3 is incorrect and needs to be fixed.
+

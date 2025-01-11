@@ -5,6 +5,7 @@ smoketest: FORCE
 	tinygo build -o ./out/zero-kb02.uf2        --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02                    ./zero-kb02/firmware/
 	tinygo build -o ./out/zero-kb02-invert.uf2 --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02,invert_rotary_pins ./zero-kb02/firmware/
 	tinygo build -o ./out/panel25.uf2          --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./panel25/firmware/
+	tinygo build -o ./out/sg48key2.uf2         --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg48key2/firmware/
 
 FORCE:
 
