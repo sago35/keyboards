@@ -16,6 +16,8 @@ github.com/sago35/koebiten v0.1.1-0.20241222080708-e8e862a8a46e h1:RCe74JLYHoXqT
 github.com/sago35/koebiten v0.1.1-0.20241222080708-e8e862a8a46e/go.mod h1:pRBto+FGM40TmiIXaBezTntGpsM2NadOZOhUMGik278=
 github.com/sago35/tinygo-keyboard v0.0.0-20241119143603-cf3e06e99259 h1:ubHB2oFcnlzuXNLxH4IfLDtWy0QfAGOGOIx4uY8zS4I=
 github.com/sago35/tinygo-keyboard v0.0.0-20241119143603-cf3e06e99259/go.mod h1:6QssvKSJDoF9dcX8Xh/jKY3K2dghGQ82XVXgBbtS4EM=
+github.com/sago35/tinygo-keyboard v0.6.1-0.20250103014834-8c10c9d983ac h1:Gy09L+p9f2ikfIH8H2rRj6XCGtbMGgL9ogCe+/1f19Y=
+github.com/sago35/tinygo-keyboard v0.6.1-0.20250103014834-8c10c9d983ac/go.mod h1:6QssvKSJDoF9dcX8Xh/jKY3K2dghGQ82XVXgBbtS4EM=
 github.com/tinygo-org/pio v0.0.0-20240901140349-27cbe9d986eb h1:LRIJwOxeTwo8ELCXWzRe6jaO82Hl386Cd9KhOonoCHw=
 github.com/tinygo-org/pio v0.0.0-20240901140349-27cbe9d986eb/go.mod h1:LU7Dw00NJ+N86QkeTGjMLNkYcEYMor6wTDpTCu0EaH8=
 golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f h1:XdNn9LlyWAhLVp6P/i8QYBW+hlyhrhei9uErw2B5GJo=
