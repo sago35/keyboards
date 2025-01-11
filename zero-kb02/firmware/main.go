@@ -18,7 +18,7 @@ import (
 	"github.com/sago35/koebiten/games/all/all"
 	"github.com/sago35/koebiten/hardware"
 	keyboard "github.com/sago35/tinygo-keyboard"
-	"github.com/sago35/tinygo-keyboard/keycodes/jp"
+	jp "github.com/sago35/tinygo-keyboard/keycodes/japanese"
 	pio "github.com/tinygo-org/pio/rp2-pio"
 	"github.com/tinygo-org/pio/rp2-pio/piolib"
 	"tinygo.org/x/drivers"

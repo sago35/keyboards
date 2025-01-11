@@ -5,7 +5,7 @@ go 1.22.5
 toolchain go1.23.2
 
 require (
-	github.com/sago35/tinygo-keyboard v0.0.0-20241119143603-cf3e06e99259
+	github.com/sago35/tinygo-keyboard v0.6.1-0.20250103014834-8c10c9d983ac
 	github.com/tinygo-org/pio v0.0.0-20240901140349-27cbe9d986eb
 	tinygo.org/x/drivers v0.29.0
 	tinygo.org/x/tinyfont v0.5.0
