@@ -12,8 +12,9 @@ require (
 )
 
 require (
+	github.com/chewxy/math32 v1.11.1 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
-	github.com/sago35/koebiten v0.2.2-0.20250216110313-ff27b9c6c66d // indirect
+	github.com/sago35/koebiten v0.2.2-0.20250530103226-5b50d5bed4ef // indirect
 	golang.org/x/exp v0.0.0-20250218142911-aa4b98e5adaa // indirect
 	tinygo.org/x/tinydraw v0.4.0 // indirect
 )

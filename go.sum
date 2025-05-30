@@ -1,3 +1,5 @@
+github.com/chewxy/math32 v1.11.1 h1:b7PGHlp8KjylDoU8RrcEsRuGZhJuz8haxnKfuMMRqy8=
+github.com/chewxy/math32 v1.11.1/go.mod h1:dOB2rcuFrCn6UHrze36WSLVPKtzPMRAQvBvUwkSsLqs=
 github.com/frankban/quicktest v1.10.2 h1:19ARM85nVi4xH7xPXuc5eM/udya5ieh7b/Sv+d844Tk=
 github.com/frankban/quicktest v1.10.2/go.mod h1:K+q6oSqb0W0Ininfk863uOk1lMy69l/P6txr3mVT54s=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
@@ -16,6 +18,8 @@ github.com/sago35/koebiten v0.1.1-0.20241222080708-e8e862a8a46e h1:RCe74JLYHoXqT
 github.com/sago35/koebiten v0.1.1-0.20241222080708-e8e862a8a46e/go.mod h1:pRBto+FGM40TmiIXaBezTntGpsM2NadOZOhUMGik278=
 github.com/sago35/koebiten v0.2.2-0.20250216110313-ff27b9c6c66d h1:7bSSX41vcCu21XI8HIpncngW7dsmroZ3YI2CZ3ovMTo=
 github.com/sago35/koebiten v0.2.2-0.20250216110313-ff27b9c6c66d/go.mod h1:pRBto+FGM40TmiIXaBezTntGpsM2NadOZOhUMGik278=
+github.com/sago35/koebiten v0.2.2-0.20250530103226-5b50d5bed4ef h1:XkUlqa6eSpn2khGW0B4jP95dVt2bK1EMOzyD6pARNko=
+github.com/sago35/koebiten v0.2.2-0.20250530103226-5b50d5bed4ef/go.mod h1:AREq1Shju9mQjWdjsNeW57zJ4mtArsCy0mDOQB7aS6E=
 github.com/sago35/tinygo-keyboard v0.0.0-20241119143603-cf3e06e99259 h1:ubHB2oFcnlzuXNLxH4IfLDtWy0QfAGOGOIx4uY8zS4I=
 github.com/sago35/tinygo-keyboard v0.0.0-20241119143603-cf3e06e99259/go.mod h1:6QssvKSJDoF9dcX8Xh/jKY3K2dghGQ82XVXgBbtS4EM=
 github.com/sago35/tinygo-keyboard v0.6.1-0.20250103014834-8c10c9d983ac h1:Gy09L+p9f2ikfIH8H2rRj6XCGtbMGgL9ogCe+/1f19Y=
