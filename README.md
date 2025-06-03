@@ -15,6 +15,7 @@ The firmware is created using [sago35/tinygo-keyboard](https://github.com/sago35
 
 * [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fzero-kb02%2Fzero-kb02)
 * [gerber data for jlcpcb](./zero-kb02/zero-kb02/GERBER-zero-kb02.zip)
+    * For the `Mark on PCB` item, please select `Order Number(Specify Position)`
 * [case (stl / 3mf)](./zero-kb02/stl/)
 * workshop - https://github.com/sago35/tinygo_keeb_workshop_2024
 
