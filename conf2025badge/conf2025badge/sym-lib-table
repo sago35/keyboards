@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "foostan/kbd")(type "Legacy")(uri "${KIPRJMOD}/../../lib/foostan/kbd/kicad-symbols/kbd.lib")(options "")(descr ""))
+  (lib (name "crides/kleeb/mcu")(type "KiCad")(uri "${KIPRJMOD}/../../lib/crides/kleeb/mcu.kicad_sym")(options "")(descr ""))
+  (lib (name "sglib")(type "KiCad")(uri "${KIPRJMOD}/../../lib/sglib.kicad_sym")(options "")(descr ""))
+)
