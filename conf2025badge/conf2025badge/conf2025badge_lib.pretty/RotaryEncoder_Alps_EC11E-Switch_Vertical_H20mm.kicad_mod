@@ -1,0 +1,258 @@
+(footprint "RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Alps rotary encoder, EC11E... with switch, vertical shaft, http://www.alps.com/prod/info/E/HTML/Encoder/Incremental/EC11/EC11E15204A3.html")
+	(tags "rotary encoder")
+	(property "Reference" "SW2"
+		(at 2.8 -4.7 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "61363807-a430-45e7-ab95-e7458c933b02")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "RotaryEncoder_Switch"
+		(at 7.5 10.4 0)
+		(layer "F.Fab")
+		(uuid "aa9c3582-f496-4d67-9047-728b8f6dda68")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f68607de-1aab-475e-b023-2b8faf24f8a3")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Rotary encoder, dual channel, incremental quadrate outputs, with switch"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "77ab2238-eeb1-472d-bd18-4103b8b9ce2e")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -1.5 -4.6)
+		(end -1.5 9.6)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "98881426-fbcd-4a89-8807-1fe5eaf3fc63")
+	)
+	(fp_line
+		(start -1.5 -4.6)
+		(end 16 -4.6)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ec188f38-6ef3-4df4-9313-4b24aa564e8a")
+	)
+	(fp_line
+		(start 16 9.6)
+		(end -1.5 9.6)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "544cb428-6ba4-48fe-82bf-207404453ccc")
+	)
+	(fp_line
+		(start 16 9.6)
+		(end 16 -4.6)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e8892b1f-5d70-4940-9f97-c997e6dbdbf5")
+	)
+	(fp_line
+		(start 1.5 -2.2)
+		(end 2.5 -3.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "3664c4b2-faf6-4b9c-bb81-2258adceaab4")
+	)
+	(fp_line
+		(start 1.5 8.3)
+		(end 1.5 -2.2)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6b2c84c7-c83a-4aac-beba-6108eae66d3d")
+	)
+	(fp_line
+		(start 2.5 -3.3)
+		(end 13.5 -3.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "dbf85fcf-0f0e-4a46-8576-7c2072e40870")
+	)
+	(fp_line
+		(start 4.5 2.5)
+		(end 10.5 2.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "137b6501-6a45-400f-8850-298b8da0d09f")
+	)
+	(fp_line
+		(start 7.5 -0.5)
+		(end 7.5 5.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "adb39cf1-27e5-40c4-9243-acee7a69996e")
+	)
+	(fp_line
+		(start 13.5 -3.3)
+		(end 13.5 8.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0ddaf20c-c14e-4d6d-aca4-7c4e0bfc6c8e")
+	)
+	(fp_line
+		(start 13.5 8.3)
+		(end 1.5 8.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5390ef95-0ef9-4dbc-9c0a-747e2490e90c")
+	)
+	(fp_circle
+		(center 7.5 2.5)
+		(end 10.5 2.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "ecbcbc24-4a43-49d4-95f8-dffba50bc33c")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 11.1 6.3 0)
+		(layer "F.Fab")
+		(uuid "b686ede0-5305-4a33-abe7-88968bf9c299")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "A" thru_hole rect
+		(at 0 0)
+		(size 2 2)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "fd4eeb4a-139d-4ead-a6f4-54e101581b7c")
+	)
+	(pad "B" thru_hole circle
+		(at 0 5)
+		(size 2 2)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "6356d2ec-13a8-45f1-aefc-1b72676aa27f")
+	)
+	(pad "C" thru_hole circle
+		(at 0 2.5)
+		(size 2 2)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "3cdc9790-c08d-48d6-9890-aca83fc61ae4")
+	)
+	(pad "MP" thru_hole rect
+		(at 7.5 -3.1)
+		(size 3.2 2)
+		(drill oval 2.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e38152c2-b46f-4bc5-bd09-21f7aaffd16c")
+	)
+	(pad "MP" thru_hole rect
+		(at 7.5 8.1)
+		(size 3.2 2)
+		(drill oval 2.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "a7f58c23-e7bf-43a4-b8e2-f3ec53e3d8e2")
+	)
+	(pad "S1" thru_hole circle
+		(at 14.5 5)
+		(size 2 2)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "c4ddf01d-3a82-4574-b65d-ce97aef804a7")
+	)
+	(pad "S2" thru_hole circle
+		(at 14.5 0)
+		(size 2 2)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "a83386e9-c42b-4606-83a8-56013cec1c59")
+	)
+	(embedded_fonts no)
+	(model "${KICAD9_3DMODEL_DIR}/Rotary_Encoder.3dshapes/RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
