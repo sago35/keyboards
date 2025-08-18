@@ -52,7 +52,40 @@
         }
       },
       "diff_pair_dimensions": [],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "copper_edge_clearance|115600000|58800000|534eaf9a-a707-4d5d-9083-df6408dd09f4|ce13d4fe-8282-4861-89bc-a52d1f9c8073",
+          ""
+        ],
+        [
+          "copper_edge_clearance|115600000|60200000|03f2cb91-bccd-4c84-b6d0-adcd6db9b226|d0789c28-0fa0-4d76-97d5-4ef5e57c464a",
+          ""
+        ],
+        [
+          "copper_edge_clearance|116100000|78800000|fc461640-3144-46af-b20c-408b7d83a333|be188208-bf98-49fb-9424-77827a29e148",
+          ""
+        ],
+        [
+          "copper_edge_clearance|116100000|80200000|3df6f203-1694-481e-98e5-be31d1258427|b8adc24b-6c7e-4816-9ecf-dc3575a0d5dd",
+          ""
+        ],
+        [
+          "copper_edge_clearance|119400000|57800000|f7af74b7-e5f8-4662-9f92-2e86ded64e72|f95573fb-1e83-42c6-897b-84f6b4373205",
+          ""
+        ],
+        [
+          "copper_edge_clearance|119400000|60200000|03f2cb91-bccd-4c84-b6d0-adcd6db9b226|ccc84756-e556-4584-9f81-b6d03c9de4bc",
+          ""
+        ],
+        [
+          "copper_edge_clearance|119900000|77800000|1f9290f7-524e-4f34-aad6-ab976427107b|ea681e4e-4f29-4acc-9811-f647fc07bfee",
+          ""
+        ],
+        [
+          "copper_edge_clearance|119900000|80200000|3df6f203-1694-481e-98e5-be31d1258427|74b4ffa0-8dab-414a-9ae5-5fb5ff30fa2e",
+          ""
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -60,7 +93,7 @@
         "annular_width": "error",
         "clearance": "error",
         "connection_width": "warning",
-        "copper_edge_clearance": "error",
+        "copper_edge_clearance": "warning",
         "copper_sliver": "warning",
         "courtyards_overlap": "error",
         "creepage": "error",
@@ -82,7 +115,7 @@
         "items_not_allowed": "error",
         "length_out_of_range": "error",
         "lib_footprint_issues": "warning",
-        "lib_footprint_mismatch": "warning",
+        "lib_footprint_mismatch": "ignore",
         "malformed_courtyard": "error",
         "microvia_drill_out_of_range": "error",
         "mirrored_text_on_front_layer": "warning",
@@ -133,7 +166,7 @@
         "min_track_width": 0.0,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -488,7 +521,7 @@
       "netlist": "",
       "plot": "",
       "pos_files": "",
-      "specctra_dsn": "",
+      "specctra_dsn": "conf2025badge.dsn",
       "step": "",
       "svg": "",
       "vrml": ""
@@ -596,6 +629,14 @@
       "version": 1
     },
     "net_format_name": "",
+    "ngspice": {
+      "fix_include_paths": true,
+      "meta": {
+        "version": 0
+      },
+      "model_mode": 4,
+      "workbook_filename": ""
+    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "space_save_all_events": true,

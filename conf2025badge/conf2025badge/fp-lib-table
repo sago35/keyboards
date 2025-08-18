@@ -3,4 +3,5 @@
   (lib (name "foostan/kbd")(type "KiCad")(uri "${KIPRJMOD}/../../lib/foostan/kbd/kicad-footprints/kbd.pretty")(options "")(descr ""))
   (lib (name "crides/kleeb/mcu")(type "KiCad")(uri "${KIPRJMOD}/../../lib/crides/kleeb/mcu.pretty")(options "")(descr ""))
   (lib (name "sglib")(type "KiCad")(uri "${KIPRJMOD}/../../lib/sglib.pretty")(options "")(descr ""))
+  (lib (name "conf2025badge_lib")(type "KiCad")(uri "${KIPRJMOD}/conf2025badge_lib.pretty")(options "")(descr ""))
 )
