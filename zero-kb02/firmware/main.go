@@ -360,7 +360,7 @@ func run() error {
 					if displayFrame == 0 {
 						display.ClearDisplay()
 						_, w := tinyfont.LineWidth(&freemono.Regular12pt7b, "LAYER "+strconv.Itoa(currentLayer))
-						tinyfont.WriteLine(&display, &freemono.Regular12pt7b, int16(128-w)/2, 40, "LAYER "+strconv.Itoa(currentLayer), textWhite)
+						tinyfont.WriteLine(display, &freemono.Regular12pt7b, int16(128-w)/2, 40, "LAYER "+strconv.Itoa(currentLayer), textWhite)
 						display.Display()
 					} else if displayFrame > 20 {
 						display.ClearDisplay()
