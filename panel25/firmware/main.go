@@ -9,12 +9,13 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/mattn/go-runewidth"
 	keyboard "github.com/sago35/tinygo-keyboard"
 	jp "github.com/sago35/tinygo-keyboard/keycodes/japanese"
 	pio "github.com/tinygo-org/pio/rp2-pio"
 	"github.com/tinygo-org/pio/rp2-pio/piolib"
 	"tinygo.org/x/tinyfont"
-	"tinygo.org/x/tinyfont/proggy"
+	"tinygo.org/x/tinyfont/shnm"
 )
 
 var (
@@ -106,26 +107,28 @@ func run() error {
 	cnt := int16(0)
 	display := NewSK6812()
 	time.Sleep(2 * time.Second)
-	str := "HACK.BAR   "
+	str := "TinyGo Keeb Tour 2025 in Osaka"
+
+	ticker := time.Tick(1 * time.Millisecond)
+	cnt2 := 0
 	for cont {
+		<-ticker
 		err := d.Tick()
 		if err != nil {
 			return err
 		}
 
-		for i := int16(0); i < 100; i++ {
-			display.SetPixel(i%10, i/10, color.RGBA{R: 0x00, G: 0x00, B: 0x00})
+		if cnt2%100 == 0 {
+			for i := int16(0); i < 100; i++ {
+				display.SetPixel(i%10, i/10, color.RGBA{R: 0x00, G: 0x00, B: 0x00})
+			}
+
+			tinyfont.WriteLine(display, &shnm.Shnmk12, 10+cnt*-1, 9, str, color.RGBA{R: 0x00, G: 0xFF, B: 0x00})
+
+			writeColors(s, ws, display.RawColors())
+			cnt = (cnt + 1) % (int16(runewidth.StringWidth(str))*7 + 8)
 		}
-
-		//x := cnt % 10
-		//y := cnt / 10
-		////println(cnt, x, y)
-		//display.SetPixel(x, y, color.RGBA{R: 0x00, G: 0x00, B: 0xFF})
-		tinyfont.WriteLine(display, &proggy.TinySZ8pt7b, 10+cnt*-1, 8, str, color.RGBA{R: 0x00, G: 0xFF, B: 0x00})
-
-		writeColors(s, ws, display.RawColors())
-		cnt = (cnt + 1) % 70
-		time.Sleep(100 * time.Millisecond)
+		cnt2++
 
 		runtime.Gosched()
 	}
