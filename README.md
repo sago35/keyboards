@@ -61,3 +61,30 @@ It was created by [rdon_key](https://x.com/rdon_key).
 * [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fsg48key2%2Fsg48key2)
   * Configuration of U3 is incorrect and needs to be fixed.
 
+## conf2025badge
+
+This is the badge for TinyGo Conference 2025 in JAPAN.
+
+![](./images/conf2025badge.jpg)
+
+* [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fconf2025badge%2Fconf2025badge)
+* [case (stl / 3mf)](./conf2025badge/stl/)
+
+| No | 品名 | 個数 | 備考 |
+|---|---|---|---|
+| 1 | 基板 | 1 | |
+| 2 | [XIAO RP2040](https://akizukidenshi.com/catalog/g/g117044/) | 1 | |
+| 3 | [ジョイスティック](https://akizukidenshi.com/catalog/g/g104048/) | 1 | |
+| 4 | [OLED 液晶](https://akizukidenshi.com/catalog/g/g112031/) | 1 | SSD1306 128x64 |
+| 5 | [プルアップ抵抗](https://akizukidenshi.com/catalog/g/g116332/) | 2 | 3.3K (1K – 10K) |
+| 6 | [キースイッチ](https://shop.yushakobo.jp/collections/all-switches) | 2 | |
+| 7 | [キーキャップ](https://shop.yushakobo.jp/collections/keycaps?sort_by=created-descending&filter.v.availability=1&filter.v.price.gte=&filter.v.price.lte=) | 2 | |
+| 8 | [キーソケット](https://shop.yushakobo.jp/products/a01ps?variant=37665172521121) | 2 | MX socket |
+| 9 | ロータリーエンコーダー | 1 | EC11 互換、20mm Plum |
+| 10 | [RGB LED](https://akizukidenshi.com/catalog/g/g115478/) | 2 | SK6812MINI-E |
+| 11 | [ブザー](https://akizukidenshi.com/catalog/g/g104118/) | 1 | |
+| 12 | エンコーダーノブ | 1 | |
+| 13 | ハット | 1 | ジョイスティック用 |
+| 14 | スイッチプレート | 1 | |
+| 15 | ボトムプレート | 1 | |
+| 16 | 木ねじ 2.1×10 | 2 | |
