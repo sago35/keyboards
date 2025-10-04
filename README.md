@@ -68,7 +68,7 @@ This is the badge for TinyGo Conference 2025 in JAPAN.
 ![](./images/conf2025badge.jpg)
 
 * [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fconf2025badge%2Fconf2025badge)
-* [case (3mf)](./conf2025badge/stl/)
+* [case (stl / 3mf)](./conf2025badge/stl/)
 
 | No | 品名 | 個数 | 備考 |
 |---|---|---|---|
