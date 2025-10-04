@@ -185,10 +185,12 @@ func run() error {
 	y := NewADCDevice(ay, 0x3000, 0xC800, true)
 	cnt := 0
 
-	dispx := int16(0)
-	dispy := int16(0)
-	deltaX := int16(1)
-	deltaY := int16(1)
+	lifegame, err := NewLifeGame(64, 32)
+	if err != nil {
+		return err
+	}
+	lifegame.InitRandom()
+
 	for cont {
 		time.Sleep(1 * time.Millisecond)
 		err := d.Tick()
@@ -217,21 +219,20 @@ func run() error {
 		}
 
 		if cnt%32 == 16 {
-			pixel := displayBuffer.GetPixel(dispx, dispy)
-			c := textWhite
-			if pixel {
-				c = textBlack
-			}
-			displayBuffer.SetPixel(dispx, dispy, c)
-			dispx += deltaX
-			dispy += deltaY
+			lifegame.Update()
+			cells := lifegame.GetCells()
+			for y := range cells {
+				for x := range cells[y] {
+					color := textBlack
+					if cells[y][x] {
+						color = textWhite
+					}
 
-			if dispx == 0 || dispx == 127 {
-				deltaX = -deltaX
-			}
-
-			if dispy == 0 || dispy == 63 {
-				deltaY = -deltaY
+					displayBuffer.SetPixel(int16(x)*2+0, int16(y)*2+0, color)
+					displayBuffer.SetPixel(int16(x)*2+0, int16(y)*2+1, color)
+					displayBuffer.SetPixel(int16(x)*2+1, int16(y)*2+0, color)
+					displayBuffer.SetPixel(int16(x)*2+1, int16(y)*2+1, color)
+				}
 			}
 
 			switch displayShowing {
