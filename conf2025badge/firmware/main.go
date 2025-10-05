@@ -8,6 +8,7 @@ import (
 	"machine"
 	"machine/usb"
 	"machine/usb/hid/mouse"
+	"math/rand/v2"
 	"runtime/interrupt"
 	"runtime/volatile"
 	"strconv"
@@ -170,11 +171,26 @@ func run() error {
 			}
 			return
 		}
+		mask := interrupt.Disable()
+		idx := 0
+		switch index {
+		case 0:
+			idx = 0
+		case 1:
+			idx = 1
+		case 2:
+			idx = 2
+		}
+		if idx < 2 {
+			wsLeds[idx] = rand.Uint32()
+		}
 		if layer != d.Layer() {
 			displayFrame = 0
 			currentLayer = d.Layer()
 			displayShowing = LAYER
 		}
+		interrupt.Restore(mask)
+		changed.Set(1)
 	})
 
 	loadKeyboardDef()
