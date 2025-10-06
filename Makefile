@@ -1,12 +1,13 @@
 smoketest: FORCE
 	mkdir -p out
-	tinygo build -o ./out/sg24-left.uf2        --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg24/firmware/left/
-	tinygo build -o ./out/sg24-right.uf2       --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg24/firmware/right/
-	tinygo build -o ./out/zero-kb02.uf2        --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02                    ./zero-kb02/firmware/
-	tinygo build -o ./out/zero-kb02-invert.uf2 --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02,invert_rotary_pins ./zero-kb02/firmware/
-	tinygo build -o ./out/panel25.uf2          --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./panel25/firmware/
-	tinygo build -o ./out/sg48key2.uf2         --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg48key2/firmware/
-	tinygo build -o ./out/conf2025badge.uf2    --target xiao-rp2040           --size short --stack-size 8kb --tags conf2025badge                ./conf2025badge/firmware/
+	tinygo build -o ./out/sg24-left.uf2           --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg24/firmware/left/
+	tinygo build -o ./out/sg24-right.uf2          --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg24/firmware/right/
+	tinygo build -o ./out/zero-kb02.uf2           --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02                    ./zero-kb02/firmware/
+	tinygo build -o ./out/zero-kb02-invert.uf2    --target waveshare-rp2040-zero --size short --stack-size 8kb --tags zero_kb02,invert_rotary_pins ./zero-kb02/firmware/
+	tinygo build -o ./out/panel25.uf2             --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./panel25/firmware/
+	tinygo build -o ./out/sg48key2.uf2            --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg48key2/firmware/
+	tinygo build -o ./out/conf2025badge.uf2       --target xiao-rp2040           --size short --stack-size 8kb --tags conf2025badge                ./conf2025badge/firmware/
+	tinygo build -o ./out/conf2025badge_sound.uf2 --target xiao-rp2040           --size short --stack-size 8kb --tags conf2025badge,with_sound     ./conf2025badge/firmware/
 
 FORCE:
 
