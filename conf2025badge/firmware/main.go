@@ -42,6 +42,9 @@ var (
 
 	textWhite = color.RGBA{255, 255, 255, 255}
 	textBlack = color.RGBA{0, 0, 0, 255}
+
+	withSound = false
+	soundCnt  = 0
 )
 
 func main() {
@@ -127,6 +130,13 @@ func run() error {
 
 	d := keyboard.New()
 
+	bzrPin := machine.GPIO1
+	pwm := machine.PWM0
+	speaker, err := tone.New(pwm, bzrPin)
+	if err != nil {
+		return err
+	}
+
 	rotaryPins := []machine.Pin{
 		machine.GPIO3,
 		machine.GPIO4,
@@ -147,6 +157,18 @@ func run() error {
 		},
 	})
 	rk.SetCallback(func(layer, index int, state keyboard.State) {
+		mask := interrupt.Disable()
+		if withSound {
+			switch index {
+			case 0:
+				speaker.SetNote(tone.B5)
+				soundCnt = 2
+			case 1:
+				speaker.SetNote(tone.D6)
+				soundCnt = 2
+			}
+		}
+		interrupt.Restore(mask)
 	})
 
 	gpioPins := []machine.Pin{machine.GPIO28, machine.GPIO29, machine.GPIO2}
@@ -189,16 +211,31 @@ func run() error {
 			currentLayer = d.Layer()
 			displayShowing = LAYER
 		}
+
+		if withSound {
+			switch index {
+			case 0:
+				speaker.SetNote(tone.C5)
+				soundCnt = 2
+			case 1:
+				speaker.SetNote(tone.E5)
+				soundCnt = 2
+			case 2:
+				speaker.SetNote(tone.G5)
+				soundCnt = 2
+			}
+		}
 		interrupt.Restore(mask)
 		changed.Set(1)
+
 	})
 
 	loadKeyboardDef()
 
 	d.Init()
 	cont := true
-	x := NewADCDevice(ax, 0x3000, 0xC800, false)
-	y := NewADCDevice(ay, 0x3000, 0xC800, true)
+	x := NewADCDevice(ax, 0x3000, 0xD000, false)
+	y := NewADCDevice(ay, 0x3000, 0xD000, true)
 	cnt := 0
 
 	lifegame, err := NewLifeGame(64, 32)
@@ -231,6 +268,17 @@ func run() error {
 				wsLeds[i] = c
 			}
 			writeColors(s, ws, wsLeds[:])
+			interrupt.Restore(mask)
+		}
+
+		if cnt%32 == 8 {
+			mask := interrupt.Disable()
+			if soundCnt > 0 {
+				soundCnt--
+				if soundCnt == 0 {
+					speaker.Stop()
+				}
+			}
 			interrupt.Restore(mask)
 		}
 
