@@ -197,9 +197,9 @@ func run() error {
 		idx := 0
 		switch index {
 		case 0:
-			idx = 0
-		case 1:
 			idx = 1
+		case 1:
+			idx = 0
 		case 2:
 			idx = 2
 		}
