@@ -107,7 +107,8 @@ func run() error {
 	cnt := int16(0)
 	display := NewSK6812()
 	time.Sleep(2 * time.Second)
-	str := "TinyGo Keeb Tour 2025 in Osaka"
+	str := "TinyGo Conference 2025 in JAPAN"
+	width := int16(runewidth.StringWidth(str))
 
 	ticker := time.Tick(1 * time.Millisecond)
 	cnt2 := 0
@@ -126,8 +127,9 @@ func run() error {
 			tinyfont.WriteLine(display, &shnm.Shnmk12, 10+cnt*-1, 9, str, color.RGBA{R: 0x00, G: 0xFF, B: 0x00})
 
 			writeColors(s, ws, display.RawColors())
-			cnt = (cnt + 1) % (int16(runewidth.StringWidth(str))*7 + 8)
+			cnt = (cnt + 1) % (width*7 + 8)
 		}
+
 		cnt2++
 
 		runtime.Gosched()
