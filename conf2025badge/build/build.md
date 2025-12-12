@@ -10,6 +10,10 @@ conf2025badge のビルドガイドです。
 * [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fconf2025badge%2Fconf2025badge)
 * [case (stl / 3mf)](./conf2025badge/stl/)
 
+TinyGo で動かすためのワークショップ資料は以下。  
+
+* [github.com/tinygo-keeb/workshop-conf2025badge](https://github.com/tinygo-keeb/workshop-conf2025badge)
+
 ## パーツ一覧
 
 必要なパーツは以下の通り。  
