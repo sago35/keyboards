@@ -7,6 +7,7 @@ import (
 	"machine"
 	"machine/usb"
 	"machine/usb/hid/mouse"
+	"math/rand/v2"
 	"time"
 
 	keyboard "github.com/sago35/tinygo-keyboard"
@@ -42,6 +43,19 @@ func run() error {
 	ay := machine.GPIO26
 
 	m := mouse.Port()
+
+	wsPin := machine.GPIO14
+	s, _ := pio.PIO0.ClaimStateMachine()
+	ws, _ := piolib.NewWS2812B(s, wsPin)
+	err := ws.EnableDMA(true)
+	if err != nil {
+		return err
+	}
+	wsLeds := [48]uint32{}
+	for i := range wsLeds {
+		wsLeds[i] = black
+	}
+	writeColors(s, ws, wsLeds[:])
 
 	d := keyboard.New()
 
@@ -79,6 +93,10 @@ func run() error {
 	sm.SetCallback(func(layer, index int, state keyboard.State) {
 		layer = d.Layer()
 		fmt.Printf("sm: %d %d %d\n", layer, index, state)
+		if state == keyboard.PressToRelease {
+			return
+		}
+		wsLeds[index] = rand.Uint32()
 	})
 
 	// override ctrl-h to BackSpace
@@ -111,19 +129,6 @@ func run() error {
 		d.SetCombo(i, c)
 	}
 
-	wsPin := machine.GPIO14
-	s, _ := pio.PIO0.ClaimStateMachine()
-	ws, _ := piolib.NewWS2812B(s, wsPin)
-	err := ws.EnableDMA(true)
-	if err != nil {
-		return err
-	}
-	wsLeds := [48]uint32{}
-	for i := range wsLeds {
-		wsLeds[i] = black
-	}
-	writeColors(s, ws, wsLeds[:])
-
 	loadKeyboardDef()
 
 	err = d.Init()
@@ -143,12 +148,38 @@ func run() error {
 			return err
 		}
 
-		if cnt%(5*3) == 0 {
+		switch cnt % (5 * 3) {
+		case 0:
 			xx := x.Get2()
 			yy := y.Get2()
 			if !(xx == 0 && yy == 0) {
 				//fmt.Printf("%04X %04X %4d %4d %4d %4d\n", x.RawValue, y.RawValue, xx, yy, x.Get(), y.Get())
 				m.Move(int(xx), int(yy))
+			}
+		case 10:
+			writeColors(s, ws, wsLeds[:])
+			for i, c := range wsLeds {
+				g := (c & 0xFF000000) >> 24
+				r := (c & 0x00FF0000) >> 16
+				b := (c & 0x0000FF00) >> 8
+				const xv = 1
+				if g > xv {
+					g -= xv
+				} else {
+					g = 0
+				}
+				if r > xv {
+					r -= xv
+				} else {
+					r = 0
+				}
+				if b > xv {
+					b -= xv
+				} else {
+					b = 0
+				}
+				c = g<<24 | r<<16 | b<<8 | 0xFF
+				wsLeds[i] = c
 			}
 		}
 		cnt++
