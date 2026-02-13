@@ -16,6 +16,10 @@ import (
 	"github.com/tinygo-org/pio/rp2-pio/piolib"
 )
 
+var (
+	indexMapFunc func(i, j, row, col, numPins int) int
+)
+
 func main() {
 	usb.Product = "sg48key2-0.1.0"
 
@@ -98,6 +102,9 @@ func run() error {
 		}
 		wsLeds[index] = rand.Uint32()
 	})
+	if indexMapFunc != nil {
+		sm.IndexMap = indexMapFunc
+	}
 
 	// override ctrl-h to BackSpace
 	d.OverrideCtrlH()
