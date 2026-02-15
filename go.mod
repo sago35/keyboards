@@ -12,8 +12,10 @@ require (
 
 require (
 	github.com/chewxy/math32 v1.11.1 // indirect
+	github.com/clipperhouse/uax29/v2 v2.2.0 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/itchio/lzma v0.0.0-20190703113020-d3e24e3e3d49 // indirect
+	github.com/mattn/go-runewidth v0.0.19 // indirect
 	golang.org/x/exp v0.0.0-20260212183809-81e46e3db34a // indirect
 	tinygo.org/x/tinydraw v0.4.0 // indirect
 )
