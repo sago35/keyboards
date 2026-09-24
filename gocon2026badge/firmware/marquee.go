@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	marqueeText   = "Go Conference 2026"
+	marqueeText   = "TinyGo Conference 2026"
 	marqueeHeight = 56
 	marqueeY      = 240 - marqueeHeight // 画面下端の帯 (gopher の可動域 y<168 と重ならないこと)
 	marqueeSpeed  = 4                   // 1 回の更新で進むピクセル数

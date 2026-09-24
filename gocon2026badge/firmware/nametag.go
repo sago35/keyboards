@@ -7,8 +7,7 @@ import (
 )
 
 // 名札画面と QR コード画面。画像は PC 側でレンダリングした RGB565(BE) raw を
-// 焼き込む (生成ツールと元 PNG は scratchpad の gen-nametag / firmware 直下の
-// nametag.png, qrcode.png を参照)。
+// 焼き込む (元 PNG は firmware 直下の nametag.png, qrcode.png, 名前の字形は nametag_src.png)。
 
 //go:embed images/nametag.rgb565
 var nametagImg string
