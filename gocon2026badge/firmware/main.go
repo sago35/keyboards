@@ -108,6 +108,10 @@ func run() error {
 	}
 	writeColors(s, ws, wsLeds[:])
 
+	err = ledStartupGlow()
+	if err != nil {
+		return err
+	}
 	initBadgeLEDs()
 
 	// パネルの自走リフレッシュ (約 60Hz) に合わせた 1/60 秒ティック。
@@ -207,10 +211,8 @@ func run() error {
 
 					switch screen {
 					case screenBadge:
+						// A のタイムテーブル画面は Go Conference 2026 用だったので無効化
 						switch i {
-						case 0: // A: タイムテーブル画面へ
-							screen = screenTimetable
-							enterTimetable()
 						case 1, 3: // U (B は現行ハードに無い): ブロック崩し画面へ
 							screen = screenBreakout
 							bkInit()

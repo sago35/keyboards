@@ -1,5 +1,13 @@
 package main
 
+import (
+	"machine"
+	"time"
+
+	pio "github.com/tinygo-org/pio/rp2-pio"
+	"github.com/tinygo-org/pio/rp2-pio/piolib"
+)
+
 // モードごとの LED リング演出。メインループの奇数ティック (33ms 周期) で
 // いずれかを呼んでから writeColors する。
 
@@ -70,4 +78,30 @@ func ledRainbow() {
 		r, g, b := hsvToRGB(h, 255, 20)
 		ledBuffer[i] = toGGRRBBAA(g, r, b, 0xFF)
 	}
+}
+
+// ledStartupGlow は電源投入直後に 1 回だけ、RP2040-Zero 基板上の WS2812
+// (GPIO16) を Go ブルーで約 1 秒かけてやさしく明滅させる。
+// リング (PIO0) とは別に PIO1 のステートマシンを使う
+func ledStartupGlow() error {
+	sm, err := pio.PIO1.ClaimStateMachine()
+	if err != nil {
+		return err
+	}
+	ws, err := piolib.NewWS2812B(sm, machine.GPIO16)
+	if err != nil {
+		return err
+	}
+	const steps = 30 // 30 x 33ms ≈ 1 秒
+	for i := 0; i <= steps; i++ {
+		// 三角波を 2 乗して立ち上がり・立ち下がりを滑らかにする
+		t := i
+		if t > steps/2 {
+			t = steps - t
+		}
+		b := uint8(0x18 * t * t / (steps / 2 * steps / 2))
+		ws.PutRGB(0, b*3/4, b)
+		time.Sleep(33 * time.Millisecond)
+	}
+	return nil
 }
