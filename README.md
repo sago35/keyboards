@@ -89,3 +89,55 @@ This is the badge for TinyGo Conference 2025 in JAPAN.
 | 14 | スイッチプレート | 1 | |
 | 15 | ボトムプレート | 1 | |
 | 16 | 木ねじ 2.1×10 | 2 | |
+
+## gocon2026badge
+
+This is the badge for Go Conference 2026.
+
+![](./images/gocon2026badge.jpg)
+
+* [kicanvas](https://kicanvas.org/?github=https%3A%2F%2Fgithub.com%2Fsago35%2Fkeyboards%2Ftree%2Fmain%2Fgocon2026badge%2Fgocon2026badge)
+* [case (MakerWorld)](https://makerworld.com/ja/models/3294325-gocon2026badge-case)
+
+| No | 品名 | 個数 | 備考 |
+|---|---|---|---|
+| 1 | 基板 | 1 | |
+| 2 | [RP2040-Zero](https://shop.talpkeyboard.com/products/rp2040-zero-usb-c-compatible) | 1 | Waveshare |
+| 3 | [TFT 液晶](https://akizukidenshi.com/catalog/g/g131019/) | 1 | ST7789 1.54 インチ 240x240 SPI |
+| 4 | [RGB LED](https://akizukidenshi.com/catalog/g/g115478/) | 16 | SK6812MINI-E、5 個入りなので注意 |
+| 5 | [タクトスイッチ](https://akizukidenshi.com/catalog/g/g103647/) | 5 | 6mm 角、高さ 5mm |
+| 6 | Grove コネクタ | 2 | I2C / UART |
+
+### pinout
+
+| Name    | Pin            | Info
+|---------|----------------|------
+| BTN\_A  | machine.GPIO3  | InputPullup
+| BTN\_B  | machine.GPIO6  | InputPullup (未搭載)
+| BTN\_R  | machine.GPIO7  | InputPullup
+| BTN\_U  | machine.GPIO8  | InputPullup
+| WS2812  | machine.GPIO9  | Output (16 LEDs)
+| LCD SCK | machine.GPIO10 | SPI1 SCK
+| LCD SDO | machine.GPIO11 | SPI1 SDO
+| LCD BL  | machine.GPIO12 | Output
+| LCD CS  | machine.GPIO13 | Output
+| LCD DC  | machine.GPIO14 | Output
+| LCD RST | machine.GPIO15 | Output
+| BTN\_L  | machine.GPIO28 | InputPullup
+| BTN\_D  | machine.GPIO29 | InputPullup
+
+### firmware
+
+```
+tinygo flash --target waveshare-rp2040-zero --size short --stack-size 8kb ./gocon2026badge/firmware/
+```
+
+| Button on badge screen | Screen |
+|---|---|
+| A | Timetable |
+| U | Breakout |
+| R | Cyclone game |
+| D | 3D demo |
+| L | Name tag (D shows the QR code) |
+
+Press A on each screen to go back to the badge screen.

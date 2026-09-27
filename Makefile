@@ -8,6 +8,7 @@ smoketest: FORCE
 	tinygo build -o ./out/sg48key2.uf2            --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./sg48key2/firmware/
 	tinygo build -o ./out/conf2025badge.uf2       --target xiao-rp2040           --size short --stack-size 8kb --tags conf2025badge                ./conf2025badge/firmware/
 	tinygo build -o ./out/conf2025badge_sound.uf2 --target xiao-rp2040           --size short --stack-size 8kb --tags conf2025badge,with_sound     ./conf2025badge/firmware/
+	tinygo build -o ./out/gocon2026badge.uf2      --target waveshare-rp2040-zero --size short --stack-size 8kb                                     ./gocon2026badge/firmware/
 
 FORCE:
 

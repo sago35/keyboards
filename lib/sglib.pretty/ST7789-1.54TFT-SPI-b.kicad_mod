@@ -1,0 +1,1409 @@
+(footprint "ST7789-1.54TFT-SPI-b"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "776c84ab-de99-4e31-8d16-23698005a69d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "ST7789-1.54TFT-SPI-b"
+		(at 0 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "9af431a2-187b-41c5-8bbf-86f389d0bbaa")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a1133af4-5e78-476c-8add-716a8e770b45")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "53c7aed3-d450-4547-a8ac-ce9f9d389dea")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_rect
+		(start -16 -22)
+		(end 16 22)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "Dwgs.User")
+		(uuid "f1c1b3c2-45e1-45d0-88ed-3eec4a38a047")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "66bf3d47-c686-4e66-b2aa-ab5ed9c2717c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -8.89 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "aade7397-c955-4f1e-ac93-d9aa559673b7")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "2" thru_hole circle
+		(at -6.35 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "4164f1af-6e33-4d99-a586-2fbe4d45530d")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "3" thru_hole circle
+		(at -3.81 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "212a4e25-595d-4952-9375-cc3885c4b0a2")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "4" thru_hole circle
+		(at -1.27 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "fb97fa76-8e7b-42f4-b679-2a5c1dfcc829")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "5" thru_hole circle
+		(at 1.27 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "769d6188-0a24-43e4-a4f6-d8ac3e6faecc")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "6" thru_hole circle
+		(at 3.81 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "009313c3-6a79-41be-bb22-55e631a42e26")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "7" thru_hole circle
+		(at 6.35 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "6c6e2779-64a9-4d61-b3dc-9d44d664939a")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "8" thru_hole circle
+		(at 8.89 -20.5)
+		(size 1 1)
+		(drill 1)
+		(layers "*.Cu" "B.Mask")
+		(remove_unused_layers no)
+		(uuid "b22bb039-dd2b-45a4-bd82-51f342ab742b")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape circle)
+				(size 1.7 1.7)
+				(zone_connect -1)
+			)
+		)
+	)
+	(embedded_fonts no)
+)
