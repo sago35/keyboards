@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>panel25 BLE</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #251519; /* 未接続はワインレッド系 */
+    color: #e0e0e0;
+    max-width: 480px;
+    margin: 16px auto;
+    padding: 0 20px;
+    transition: background 0.3s;
+  }
+  body.connected { background: #12211b; /* 接続中はグリーン系 */ }
+  button {
+    font-size: 1rem;
+    padding: 6px 14px;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background: #2a2a33;
+    color: #e0e0e0;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.4; cursor: default; }
+  #status { margin-left: 10px; }
+  #grid, #moleGrid, #runGrid {
+    display: grid;
+    grid-template-columns: repeat(10, min(8vw, 34px));
+    gap: 3px;
+    touch-action: none;
+    width: max-content;
+    margin: 16px auto;
+    user-select: none;
+  }
+  .screenBtn.selected { border-color: #fff; }
+  .cell {
+    aspect-ratio: 1;
+    background: #000;
+    border: 1px solid #3a3a44;
+    border-radius: 5px;
+  }
+  .palette {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid #555;
+    cursor: pointer;
+    padding: 0;
+  }
+  .swatch.selected { border-color: #fff; }
+  #customColor {
+    width: 42px;
+    height: 34px;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
+  #text { font-size: 1rem; padding: 6px; border-radius: 6px; border: 1px solid #555; background: #2a2a33; color: #e0e0e0; width: 260px; }
+  .note { color: #999; font-size: 0.85rem; }
+  #settingsBtn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    font-size: 1.1rem;
+  }
+  #settingsPanel {
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 4px 12px;
+    margin: 0 0 12px;
+    background: #22222b;
+  }
+  #defaultText { font-size: 1rem; padding: 6px; border-radius: 6px; border: 1px solid #555; background: #2a2a33; color: #e0e0e0; width: 240px; }
+</style>
+</head>
+<body>
+<button id="settingsBtn" title="設定">&#9881;</button>
+
+<div id="settingsPanel" style="display: none">
+  <div class="row">
+    <input type="text" id="defaultText" placeholder="デフォルトのスクロール文字列">
+    <button id="setDefault">保存</button>
+  </div>
+  <p class="note">
+    起動時に流れる文字列をパネルのフラッシュへ保存する。空欄で保存すると組み込みの文字列に戻る。
+  </p>
+</div>
+
+<div class="row">
+  <button id="connect">接続</button>
+  <button id="back">元の表示に戻す</button>
+  <span id="status">未接続</span>
+</div>
+
+<div class="row">
+  <button class="screenBtn selected" data-screen="editor">エディタ</button>
+  <button class="screenBtn" data-screen="mole">モグラたたき</button>
+  <button class="screenBtn" data-screen="run">ドッジラン</button>
+</div>
+
+<div id="editorScreen">
+
+<div class="palette" id="palette">
+  <input type="color" id="customColor" value="#00ff00" title="任意の色">
+</div>
+
+<div id="grid"></div>
+
+<div class="row">
+  <button id="clear">全消去</button>
+  <label><input type="checkbox" id="fade"> 徐々に消える</label>
+  <label><input type="checkbox" id="autoReturn" checked> 10 秒でスクロール表示に戻る</label>
+</div>
+
+<div class="row">
+  <input type="text" id="text" placeholder="スクロールさせる文字列">
+  <button id="send">送信</button>
+</div>
+
+<div class="row">
+  <label><input type="checkbox" id="scrollOnce"> 文字列は一回スクロールしたら戻る</label>
+</div>
+
+</div>
+
+<div id="moleScreen" style="display: none">
+
+<div class="row">
+  <button id="moleStart">スタート</button>
+  <span id="moleStatus"></span>
+</div>
+
+<div class="row">
+  <span id="moleInfo" class="note">30 秒間、光った 2x2 のモグラをタップ。赤 10 点、金 30 点 (早く叩くほど高得点)、外すと -10 点。20 秒からは後半戦。</span>
+</div>
+
+<div id="moleGrid"></div>
+
+<div class="row">
+  <span id="moleScore"></span>
+  <span id="moleHigh" class="note"></span>
+  <button id="moleHighReset">ハイスコアをリセット</button>
+</div>
+
+</div>
+
+<div id="runScreen" style="display: none">
+
+<div class="row">
+  <button id="runStart">スタート</button>
+  <button id="runTilt" style="display: none">傾き操作を有効にする</button>
+  <span id="runStatus"></span>
+</div>
+
+<div class="row">
+  <span id="runInfo" class="note">スマホの傾きで左右に動き、流れてくる障害物をよける。進むほど速く、障害物も増える。接続中はパネル側だけに表示される。</span>
+</div>
+
+<div id="runGrid"></div>
+
+<div class="row">
+  <span id="runScore"></span>
+  <span id="runHigh" class="note"></span>
+  <button id="runHighReset">ハイスコアをリセット</button>
+</div>
+
+</div>
+
+<p class="note">
+  Web Bluetooth 対応ブラウザ (Chrome / Edge) と https または localhost が必要。
+</p>
+
+<script>
+'use strict';
+
+const NUS_SERVICE = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+const NUS_RX = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+const CMD_SET_PIXEL = 0x01;
+const CMD_CLEAR = 0x02;
+const CMD_RETURN = 0x04;
+const PRESETS = [
+  '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff',
+  '#ff00ff', '#ff8000', '#ffffff', '#000000',
+];
+
+const statusEl = document.getElementById('status');
+const grid = document.getElementById('grid');
+const palette = document.getElementById('palette');
+const customColor = document.getElementById('customColor');
+
+let rxChar = null;
+let currentColor = [0, 255, 0];
+const cells = [];
+const cellColors = []; // "r,g,b" の文字列で保持し、同色の再送信を省く
+
+function setStatus(s) { statusEl.textContent = s; }
+
+function setConnected(on) {
+  document.body.classList.toggle('connected', on);
+}
+
+// Web Bluetooth はセキュアコンテキスト (https か localhost) でしか使えない
+if (!navigator.bluetooth) {
+  document.getElementById('connect').disabled = true;
+  if (!window.isSecureContext) {
+    setStatus('この URL では使えません。https か http://localhost で開いてください (file:// や LAN の IP アドレスは不可)');
+  } else {
+    setStatus('このブラウザは Web Bluetooth 非対応です。Chrome か Edge を使ってください');
+  }
+}
+
+// ---- 接続 ----
+
+document.getElementById('connect').addEventListener('click', async () => {
+  try {
+    const dev = await navigator.bluetooth.requestDevice({
+      filters: [{ name: 'panel25-ble' }],
+      optionalServices: [NUS_SERVICE],
+    });
+    dev.addEventListener('gattserverdisconnected', () => {
+      rxChar = null;
+      ctrlQueue.length = 0;
+      dirty.clear();
+      // 切断時はファームウェア側でデフォルト表示に戻る
+      cancelReturnTimer();
+      lastMode = null;
+      setConnected(false);
+      document.getElementById('connect').disabled = false;
+      setStatus('切断されました');
+      // ドッジランは表示先が web へ戻るので描き直す
+      if (currentScreen === 'run') runRefreshDisplay();
+    });
+    setStatus('接続中...');
+    const server = await dev.gatt.connect();
+    const svc = await server.getPrimaryService(NUS_SERVICE);
+    rxChar = await svc.getCharacteristic(NUS_RX);
+    setConnected(true);
+    document.getElementById('connect').disabled = true;
+    setStatus('接続済み (' + dev.name + ')');
+    // 未接続の間にエディタへ描いた分をパネルへ反映して表示を揃える
+    if (currentScreen === 'editor') syncEditorToPanel();
+    // ドッジランは表示先がパネルへ切り替わるので描き直す
+    if (currentScreen === 'run') runRefreshDisplay();
+  } catch (e) {
+    setStatus('接続失敗: ' + e.message);
+  }
+});
+
+// ---- 送信 ----
+// GATT は同時に 1 操作しか受けないため直列化する。ピクセルは FIFO ではなく
+// ダーティセル方式にする。送信待ちは「変更されたセルの集合」だけを持ち、
+// 送信時にそのセルの最新色を 1 write へ 3 個ずつ詰める。描画がどれだけ
+// 速くても未送信は最大 100 セルで頭打ちになり、遅延が積み上がらない。
+
+const ctrlQueue = []; // テキストや全消去など、順序が必要なコマンド
+const dirty = new Set();
+const panelColors = [];
+for (let i = 0; i < 100; i++) panelColors.push([0, 0, 0]);
+let pumping = false;
+
+function enqueue(bytes) {
+  // 未接続のときはためずに捨てる (接続した瞬間にまとめて再生されるのを防ぐ)
+  if (!rxChar) return;
+  ctrlQueue.push(bytes);
+  void pump();
+}
+
+function setPanelPixel(x, y, r, g, b) {
+  const c = panelColors[y * 10 + x];
+  c[0] = r;
+  c[1] = g;
+  c[2] = b;
+  if (!rxChar) return;
+  dirty.add(y * 10 + x);
+  void pump();
+}
+
+async function pump() {
+  if (pumping || !rxChar) return;
+  pumping = true;
+  try {
+    while (rxChar && (ctrlQueue.length > 0 || dirty.size > 0)) {
+      let buf;
+      if (ctrlQueue.length > 0) {
+        buf = ctrlQueue.shift();
+      } else {
+        buf = new Uint8Array(Math.min(3, dirty.size) * 6);
+        let pos = 0;
+        for (const idx of dirty) {
+          if (pos >= buf.length) break;
+          dirty.delete(idx);
+          const [r, g, b] = panelColors[idx];
+          buf[pos++] = CMD_SET_PIXEL;
+          buf[pos++] = idx % 10;
+          buf[pos++] = Math.floor(idx / 10);
+          buf[pos++] = r;
+          buf[pos++] = g;
+          buf[pos++] = b;
+        }
+      }
+      if (rxChar.writeValueWithoutResponse) {
+        await rxChar.writeValueWithoutResponse(buf);
+      } else {
+        await rxChar.writeValue(buf);
+      }
+    }
+  } catch (e) {
+    setStatus('送信失敗: ' + e.message);
+  } finally {
+    pumping = false;
+  }
+}
+
+// ---- パレット ----
+
+function hexToRGB(hex) {
+  return [
+    parseInt(hex.slice(1, 3), 16),
+    parseInt(hex.slice(3, 5), 16),
+    parseInt(hex.slice(5, 7), 16),
+  ];
+}
+
+// rgb が null のときはランダムモード (塗るたびに色を変える)
+function selectSwatch(el, rgb) {
+  randomMode = rgb === null;
+  if (rgb !== null) currentColor = rgb;
+  for (const s of palette.querySelectorAll('.swatch, #customColor')) {
+    s.classList.toggle('selected', s === el);
+  }
+}
+
+let randomMode = false;
+let lastHue = Math.random() * 360;
+
+function hsvToRGB(h) {
+  const f = (n) => {
+    const k = (n + h / 60) % 6;
+    return Math.round(255 * (1 - Math.max(0, Math.min(k, 4 - k, 1))));
+  };
+  return [f(5), f(3), f(1)];
+}
+
+// 前回から色相を 60 度以上離して、LED でも見分けやすい色にする
+function nextRandomColor() {
+  lastHue = (lastHue + 60 + Math.random() * 240) % 360;
+  return hsvToRGB(lastHue);
+}
+
+for (const hex of PRESETS) {
+  const b = document.createElement('button');
+  b.className = 'swatch';
+  b.style.background = hex;
+  b.title = hex === '#000000' ? '消しゴム' : hex;
+  b.addEventListener('click', () => selectSwatch(b, hexToRGB(hex)));
+  palette.insertBefore(b, customColor);
+}
+
+const randomSwatch = document.createElement('button');
+randomSwatch.className = 'swatch';
+randomSwatch.style.background =
+  'conic-gradient(red, yellow, lime, cyan, blue, magenta, red)';
+randomSwatch.title = 'ランダム';
+randomSwatch.addEventListener('click', () => selectSwatch(randomSwatch, null));
+palette.insertBefore(randomSwatch, customColor);
+palette.querySelector('.swatch').classList.add('selected');
+currentColor = hexToRGB(PRESETS[0]);
+
+customColor.addEventListener('input', () => {
+  selectSwatch(customColor, hexToRGB(customColor.value));
+});
+customColor.addEventListener('click', () => {
+  selectSwatch(customColor, hexToRGB(customColor.value));
+});
+
+// ---- 10x10 グリッド ----
+
+for (let y = 0; y < 10; y++) {
+  for (let x = 0; x < 10; x++) {
+    const c = document.createElement('div');
+    c.className = 'cell';
+    c.dataset.x = x;
+    c.dataset.y = y;
+    grid.appendChild(c);
+    cells.push(c);
+    cellColors.push('0,0,0');
+  }
+}
+
+function sendPixel(x, y, r, g, b, force) {
+  const key = r + ',' + g + ',' + b;
+  const idx = y * 10 + x;
+  if (!force && cellColors[idx] === key) return;
+  cellColors[idx] = key;
+  cells[idx].style.background = 'rgb(' + key + ')';
+  // 未接続の間の変更は接続時にまとめてパネルへ送り直す
+  if (!rxChar) panelNeedsSync = true;
+  setPanelPixel(x, y, r, g, b);
+}
+
+// ドラッグ中に同じセルで pointermove が連発しても 1 回だけ送るための記録
+let lastStrokeIdx = -1;
+
+function paintAt(clientX, clientY) {
+  const el = document.elementFromPoint(clientX, clientY);
+  if (!el || !el.dataset || el.dataset.x === undefined) return;
+  const x = Number(el.dataset.x);
+  const y = Number(el.dataset.y);
+  const idx = y * 10 + x;
+  if (idx === lastStrokeIdx) return;
+  lastStrokeIdx = idx;
+
+  if (randomMode) currentColor = nextRandomColor();
+  const [r, g, b] = currentColor;
+  ensureFreshPanelImage();
+  // 同じ色の塗り直しも送信して復帰タイマーを引き延ばす
+  sendPixel(x, y, r, g, b, true);
+  noteEditActivity();
+
+  if (fadeCheck.checked && (r | g | b) !== 0) {
+    fades.set(idx, { x, y, r, g, b, start: performance.now() });
+    startFadeTimer();
+  } else {
+    fades.delete(idx);
+  }
+}
+
+// ---- フェードアウト ----
+// オンのとき、描いたピクセルを 0.5 秒保持し、その後 1 秒かけて黒にする
+
+const FADE_HOLD_MS = 500;
+const FADE_MS = 1000;
+const fadeCheck = document.getElementById('fade');
+const fades = new Map();
+let fadeTimer = null;
+
+function startFadeTimer() {
+  if (fadeTimer === null) fadeTimer = setInterval(fadeTick, 200);
+}
+
+// オンにした時点で点いているピクセルもフェード対象にする。
+// オフにしたら未完了のフェードを止めてその時点の色で残す。
+fadeCheck.addEventListener('change', () => {
+  if (!fadeCheck.checked) {
+    fades.clear();
+    return;
+  }
+  ensureFreshPanelImage();
+  const now = performance.now();
+  for (let idx = 0; idx < 100; idx++) {
+    if (cellColors[idx] === '0,0,0') continue;
+    const [r, g, b] = cellColors[idx].split(',').map(Number);
+    fades.set(idx, { x: idx % 10, y: Math.floor(idx / 10), r, g, b, start: now });
+  }
+  if (fades.size > 0) {
+    startFadeTimer();
+    noteEditActivity();
+  }
+});
+
+function fadeTick() {
+  const now = performance.now();
+  for (const [idx, f] of fades) {
+    const t = (now - f.start - FADE_HOLD_MS) / FADE_MS;
+    if (t < 0) continue;
+    if (t >= 1) {
+      fades.delete(idx);
+      sendPixel(f.x, f.y, 0, 0, 0);
+      continue;
+    }
+    const k = 1 - t;
+    sendPixel(f.x, f.y, Math.round(f.r * k), Math.round(f.g * k), Math.round(f.b * k));
+  }
+  if (fades.size === 0) {
+    clearInterval(fadeTimer);
+    fadeTimer = null;
+  }
+}
+
+let painting = false;
+
+grid.addEventListener('pointerdown', (e) => {
+  painting = true;
+  lastStrokeIdx = -1;
+  grid.setPointerCapture(e.pointerId);
+  paintAt(e.clientX, e.clientY);
+  e.preventDefault();
+});
+grid.addEventListener('pointermove', (e) => {
+  if (painting) paintAt(e.clientX, e.clientY);
+});
+window.addEventListener('pointerup', () => { painting = false; lastStrokeIdx = -1; });
+window.addEventListener('pointercancel', () => { painting = false; lastStrokeIdx = -1; });
+
+// ---- 全消去とテキスト送信 ----
+
+document.getElementById('clear').addEventListener('click', () => {
+  fades.clear();
+  for (let i = 0; i < 100; i++) {
+    cellColors[i] = '0,0,0';
+    cells[i].style.background = '#000';
+  }
+  if (!rxChar) panelNeedsSync = true;
+  // 全消去でファームウェア側の編集バッファとページは必ず一致する
+  panelImageStale = false;
+  dirty.clear();
+  for (const c of panelColors) {
+    c[0] = 0;
+    c[1] = 0;
+    c[2] = 0;
+  }
+  enqueue(new Uint8Array([CMD_CLEAR]));
+  noteEditActivity();
+});
+
+// ---- デフォルト表示への復帰 ----
+// ファームウェアはタイマーを持たないため、戻すタイミングはページで決めて
+// 0x04 を送る。切断時はファームウェアが自力でデフォルトに戻る。
+
+const autoReturnCheck = document.getElementById('autoReturn');
+const scrollOnceCheck = document.getElementById('scrollOnce');
+
+let returnTimer = null;
+let lastMode = null; // 'edit' | 'text' | null
+
+function cancelReturnTimer() {
+  if (returnTimer !== null) {
+    clearTimeout(returnTimer);
+    returnTimer = null;
+  }
+}
+
+function scheduleReturn(ms) {
+  cancelReturnTimer();
+  returnTimer = setTimeout(() => {
+    returnTimer = null;
+    lastMode = null;
+    enqueue(new Uint8Array([CMD_RETURN]));
+  }, ms);
+}
+
+function sendReturn() {
+  cancelReturnTimer();
+  lastMode = null;
+  enqueue(new Uint8Array([CMD_RETURN]));
+}
+
+// ピクセル編集の操作があった。チェックありは 10 秒、なしでも
+// 置きっぱなし防止として 60 秒で復帰を予約する
+function noteEditActivity() {
+  lastMode = 'edit';
+  scheduleReturn(autoReturnCheck.checked ? 10000 : 60000);
+}
+
+autoReturnCheck.addEventListener('change', () => {
+  if (lastMode !== 'edit') return;
+  scheduleReturn(autoReturnCheck.checked ? 10000 : 60000);
+});
+
+// ファームウェアと同じ計算でスクロール 1 周の時間を見積もる
+// (全角 2 半角 1 の表示幅 w に対し (w*7+8) フレーム、1 フレーム 100ms)
+function scrollOnceMs(s) {
+  let w = 0;
+  const wide = /[\u1100-\u115F\u2E80-\uA4CF\u3000-\u303F\uAC00-\uD7A3\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFF60\uFFE0-\uFFE6]/;
+  for (const ch of s) {
+    w += wide.test(ch) ? 2 : 1;
+  }
+  return (w * 7 + 8) * 100;
+}
+
+document.getElementById('back').addEventListener('click', sendReturn);
+
+// 色 (黒は除く) と文字列を送る。復帰の予約は呼び出し側で行う
+function sendScrollText(text, rgb, onSent) {
+  const sendText = () => {
+    const bytes = new TextEncoder().encode(text + '\n');
+    // ファームウェア側は改行まで蓄積するので 20 バイトずつに分割して送る
+    for (let i = 0; i < bytes.length; i += 20) {
+      enqueue(bytes.slice(i, i + 20));
+    }
+    if (onSent) onSent();
+  };
+  // 選択中の色を文字色として先に送る。ファームウェアは 100ms ごとに
+  // 最後の確定メッセージしか読まないため、文字列は 300ms 空けて送る
+  const [r, g, b] = rgb;
+  if ((r | g | b) === 0) {
+    sendText();
+    return;
+  }
+  const hex = '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+  enqueue(new TextEncoder().encode(hex + '\n'));
+  setTimeout(sendText, 300);
+}
+
+// ---- 設定メニュー ----
+
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  const panel = document.getElementById('settingsPanel');
+  panel.style.display = panel.style.display === 'none' ? '' : 'none';
+});
+
+// "=文字列" でファームウェアのデフォルト文字列を書き替える (フラッシュ保存)。
+// 空欄で押すと組み込みの文字列に戻す
+document.getElementById('setDefault').addEventListener('click', () => {
+  const text = document.getElementById('defaultText').value;
+  const label = text === '' ? '組み込みの文字列に戻しますか?' : 'デフォルトの文字列を「' + text + '」にしますか?';
+  if (!confirm(label)) return;
+  const bytes = new TextEncoder().encode('=' + text + '\n');
+  for (let i = 0; i < bytes.length; i += 20) {
+    enqueue(bytes.slice(i, i + 20));
+  }
+  cancelReturnTimer();
+  lastMode = null;
+});
+
+document.getElementById('send').addEventListener('click', () => {
+  const text = document.getElementById('text').value;
+  if (text === '') return;
+  sendScrollText(text, currentColor, () => {
+    lastMode = 'text';
+    // チェックありは 1 周分の時間で、なしは 10 秒で戻す
+    if (scrollOnceCheck.checked) {
+      scheduleReturn(scrollOnceMs(text) + 500);
+    } else {
+      scheduleReturn(10000);
+    }
+  });
+});
+
+// ---- 画面切り替え ----
+
+const screens = {
+  editor: document.getElementById('editorScreen'),
+  mole: document.getElementById('moleScreen'),
+  run: document.getElementById('runScreen'),
+};
+
+let currentScreen = 'editor';
+
+for (const btn of document.querySelectorAll('.screenBtn')) {
+  btn.addEventListener('click', () => {
+    currentScreen = btn.dataset.screen;
+    for (const b of document.querySelectorAll('.screenBtn')) {
+      b.classList.toggle('selected', b === btn);
+    }
+    for (const [name, el] of Object.entries(screens)) {
+      el.style.display = name === btn.dataset.screen ? '' : 'none';
+    }
+    if (btn.dataset.screen === 'mole') {
+      stopRun();
+      resetMoleUI();
+    } else if (btn.dataset.screen === 'run') {
+      stopMole();
+      resetRunUI();
+    } else {
+      stopMole();
+      stopRun();
+      syncEditorToPanel();
+    }
+  });
+}
+
+// ---- モグラたたき ----
+// 2x2 のモグラをタップ。基本点は赤 10 点、金 30 点で、出現してから
+// 時間とともに減っていく。外すと -10 点 (0 未満にはならない)。
+// 20 秒からは後半戦になる (19 秒から 1 秒は静寂)。
+// 終了後はスコアをスクロールし、10 秒でデフォルト表示に戻る。
+
+const MOLE_TIME_MS = 30000;
+const MOLE_BREAK_AT = 19000;
+const MOLE_SECOND_AT = 20000;
+const MOLE_DECAY_MS = 1500;
+
+const moleGrid = document.getElementById('moleGrid');
+const moleInfo = document.getElementById('moleInfo');
+const moleStatus = document.getElementById('moleStatus');
+const moleScore = document.getElementById('moleScore');
+const moleCells = [];
+
+for (let y = 0; y < 10; y++) {
+  for (let x = 0; x < 10; x++) {
+    const c = document.createElement('div');
+    c.className = 'cell';
+    c.dataset.x = x;
+    c.dataset.y = y;
+    moleGrid.appendChild(c);
+    moleCells.push(c);
+  }
+}
+
+const mole = {
+  running: false,
+  counting: false,
+  score: 0,
+  startAt: 0,
+  phase: 'first', // 'first' | 'break' | 'second'
+  moles: [],
+  tickTimer: null,
+  spawnTimers: [],
+  flashTimer: null,
+  effectTimer: null,
+};
+
+function molePixel(x, y, r, g, b) {
+  moleCells[y * 10 + x].style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+  setPanelPixel(x, y, r, g, b);
+}
+
+function paintCells(cells, r, g, b) {
+  for (const [x, y] of cells) molePixel(x, y, r, g, b);
+}
+
+function moleClearBoard() {
+  dirty.clear();
+  for (const c of panelColors) {
+    c[0] = 0;
+    c[1] = 0;
+    c[2] = 0;
+  }
+  enqueue(new Uint8Array([CMD_CLEAR]));
+  for (const c of moleCells) c.style.background = '#000';
+}
+
+function blockCells(x0, y0) {
+  return [[x0, y0], [x0 + 1, y0], [x0, y0 + 1], [x0 + 1, y0 + 1]];
+}
+
+function drawMole(m) {
+  if (m.bonus) {
+    paintCells(blockCells(m.x, m.y), 255, 180, 0);
+  } else {
+    paintCells(blockCells(m.x, m.y), 255, 0, 0);
+  }
+}
+
+function redrawMoles() {
+  for (const m of mole.moles) drawMole(m);
+}
+
+function removeMole(m, erase) {
+  clearTimeout(m.lifeTimer);
+  mole.moles = mole.moles.filter((o) => o !== m);
+  if (erase) paintCells(blockCells(m.x, m.y), 0, 0, 0);
+}
+
+function molesOverlap(x, y) {
+  return mole.moles.some((m) => Math.abs(m.x - x) < 2 && Math.abs(m.y - y) < 2);
+}
+
+function spawnOne(lifeMs, bonus) {
+  if (!mole.running) return;
+  let x = 0;
+  let y = 0;
+  let tries = 0;
+  do {
+    x = Math.floor(Math.random() * 9);
+    y = Math.floor(Math.random() * 9);
+    tries++;
+  } while (molesOverlap(x, y) && tries < 20);
+  if (molesOverlap(x, y)) return;
+  const m = {
+    x,
+    y,
+    bonus,
+    spawnAt: performance.now(),
+    lifeTimer: null,
+  };
+  mole.moles.push(m);
+  drawMole(m);
+  m.lifeTimer = setTimeout(() => removeMole(m, true), lifeMs);
+}
+
+// 出現タイミングと寿命の固定スケジュール。乱数は位置にしか使わず、
+// 金モグラは 5 匹ごとに 1 匹と決めて、スコアを比較できるようにする。
+// 前半は 1 秒ごとに 1 匹、後半は 600ms 間隔 (2 匹重なる) から
+// 25 秒以降 350ms 間隔 (3 匹重なる) で畳みかける
+function buildMoleSchedule() {
+  const sched = [];
+  for (let t = 0; t < MOLE_BREAK_AT; t += 1000) sched.push({ t, life: 950 });
+  for (let t = MOLE_SECOND_AT; t < 25000; t += 600) sched.push({ t, life: 1000 });
+  for (let t = 25000; t < MOLE_TIME_MS; t += 350) sched.push({ t, life: 900 });
+  return sched.map((s, i) => ({ ...s, bonus: i % 5 === 4 }));
+}
+
+// 静寂の間に盤面の外周をシアンで 2 回点滅させて後半を予告する
+function breakEffect() {
+  const border = [];
+  for (let i = 0; i < 10; i++) {
+    border.push([i, 0], [i, 9]);
+    if (i > 0 && i < 9) border.push([0, i], [9, i]);
+  }
+  const frames = [
+    () => paintCells(border, 0, 160, 255),
+    () => paintCells(border, 0, 0, 0),
+    () => paintCells(border, 0, 160, 255),
+    () => paintCells(border, 0, 0, 0),
+  ];
+  let i = 0;
+  const step = () => {
+    if (!mole.running) return;
+    frames[i]();
+    i++;
+    if (i < frames.length) mole.effectTimer = setTimeout(step, 220);
+  };
+  step();
+}
+
+function updateMoleInfo() {
+  const rest = Math.max(0, MOLE_TIME_MS - (performance.now() - mole.startAt));
+  let label = '';
+  if (mole.phase === 'break') label = ' (後半準備中)';
+  if (mole.phase === 'second') label = ' (後半)';
+  moleStatus.textContent = '残り ' + (rest / 1000).toFixed(1) + ' 秒 / ' + mole.score + ' 点' + label;
+}
+
+// ゲームがパネルを書き替えたかどうか。エディタ画面に戻ったときに
+// エディタの内容を送り直してパネルと表示を揃えるために使う
+let panelNeedsSync = false;
+
+// リロード直後はファームウェア側の編集バッファに前回の内容が残っていて
+// ページの白紙状態と食い違うため、最初の編集の前に作り直しが要る
+let panelImageStale = true;
+
+// パネル側の編集バッファをページの内容で作り直す (全消去してから送る)
+function pushEditorImage() {
+  panelImageStale = false;
+  panelNeedsSync = false;
+  dirty.clear();
+  for (const c of panelColors) {
+    c[0] = 0;
+    c[1] = 0;
+    c[2] = 0;
+  }
+  enqueue(new Uint8Array([CMD_CLEAR]));
+  for (let idx = 0; idx < 100; idx++) {
+    if (cellColors[idx] === '0,0,0') continue;
+    const [r, g, b] = cellColors[idx].split(',').map(Number);
+    setPanelPixel(idx % 10, Math.floor(idx / 10), r, g, b);
+  }
+}
+
+function ensureFreshPanelImage() {
+  if (!panelImageStale || !rxChar) return;
+  pushEditorImage();
+}
+
+function syncEditorToPanel() {
+  if (!panelNeedsSync || !rxChar) return;
+  pushEditorImage();
+  noteEditActivity();
+}
+
+const MOLE_INTRO =
+  '30 秒間、光った 2x2 のモグラをタップ。赤 10 点、金 30 点 (早く叩くほど高得点)、外すと -10 点。20 秒からは後半戦。';
+
+// モグラたたき画面に入るたびにスタート前の初期状態へ戻す
+function resetMoleUI() {
+  stopMole();
+  stopScoreScroll();
+  for (const c of moleCells) c.style.background = '#000';
+  moleInfo.textContent = MOLE_INTRO;
+  moleStatus.textContent = '';
+  moleScore.textContent = '';
+  updateHighDisplay();
+}
+
+// 5x7 のカウントダウン用グリフ
+const MOLE_GLYPHS = {
+  '1': ['..1..', '.11..', '..1..', '..1..', '..1..', '..1..', '.111.'],
+  '2': ['.111.', '1...1', '....1', '...1.', '..1..', '.1...', '11111'],
+  '3': ['1111.', '....1', '....1', '.111.', '....1', '....1', '1111.'],
+};
+
+function drawGlyph(name, ox, oy, r, g, b, px = molePixel) {
+  const rows = MOLE_GLYPHS[name];
+  for (let y = 0; y < rows.length; y++) {
+    for (let x = 0; x < rows[y].length; x++) {
+      if (rows[y][x] === '1') px(ox + x, oy + y, r, g, b);
+    }
+  }
+}
+
+// スタート後は 3 2 1 のカウントダウンを見せ、GO の拍でそのまま開始する
+// (最初のモグラの出現が GO の合図になる)
+function startMole() {
+  stopMole();
+  stopScoreScroll();
+  mole.counting = true;
+  moleScore.textContent = '';
+  cancelReturnTimer();
+  lastMode = null;
+  panelNeedsSync = true;
+  const seq = ['3', '2', '1'];
+  let i = 0;
+  const step = () => {
+    if (!mole.counting) return;
+    moleClearBoard();
+    if (i < seq.length) {
+      drawGlyph(seq[i], 2, 1, 255, 255, 255);
+      moleStatus.textContent = seq[i] + '...';
+      i++;
+      mole.effectTimer = setTimeout(step, 700);
+      return;
+    }
+    mole.counting = false;
+    moleStatus.textContent = 'GO!';
+    beginMole();
+  };
+  step();
+}
+
+function beginMole() {
+  mole.running = true;
+  mole.score = 0;
+  mole.phase = 'first';
+  mole.moles = [];
+  mole.spawnTimers = [];
+  mole.startAt = performance.now();
+  moleClearBoard();
+  for (const s of buildMoleSchedule()) {
+    mole.spawnTimers.push(setTimeout(() => spawnOne(s.life, s.bonus), s.t));
+  }
+  mole.tickTimer = setInterval(() => {
+    const elapsed = performance.now() - mole.startAt;
+    if (mole.phase === 'first' && elapsed >= MOLE_BREAK_AT) {
+      mole.phase = 'break';
+      for (const m of [...mole.moles]) removeMole(m, true);
+      breakEffect();
+    }
+    if (mole.phase === 'break' && elapsed >= MOLE_SECOND_AT) {
+      mole.phase = 'second';
+    }
+    updateMoleInfo();
+    if (elapsed >= MOLE_TIME_MS) endMole();
+  }, 100);
+}
+
+function stopMole() {
+  mole.running = false;
+  mole.counting = false;
+  for (const m of mole.moles) clearTimeout(m.lifeTimer);
+  mole.moles = [];
+  for (const t of mole.spawnTimers || []) clearTimeout(t);
+  mole.spawnTimers = [];
+  clearInterval(mole.tickTimer);
+  clearTimeout(mole.flashTimer);
+  clearTimeout(mole.effectTimer);
+}
+
+// ハイスコアはブラウザの localStorage に保存する (読めない環境では 0 扱い)。
+// レギュレーションを変えたらキーの版番号を上げて記録をリセットする
+const MOLE_HIGH_KEY = 'panel25-mole-highscore-v2';
+const moleHigh = document.getElementById('moleHigh');
+
+try {
+  localStorage.removeItem('panel25-mole-highscore');
+} catch (e) {
+  // 旧キーが消せなくても実害はない
+}
+
+function loadHighScore() {
+  try {
+    return Number(localStorage.getItem(MOLE_HIGH_KEY)) || 0;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function resetHighScore() {
+  try {
+    localStorage.removeItem(MOLE_HIGH_KEY);
+  } catch (e) {
+    // 消せない環境では表示だけ 0 に戻る
+  }
+  updateHighDisplay();
+}
+
+function saveHighScore(v) {
+  try {
+    localStorage.setItem(MOLE_HIGH_KEY, String(v));
+  } catch (e) {
+    // 保存できない環境では表示だけになる
+  }
+}
+
+function updateHighDisplay() {
+  const high = loadHighScore();
+  moleHigh.textContent = high > 0 ? 'ハイスコア: ' + high + ' 点' : '';
+}
+
+updateHighDisplay();
+
+document.getElementById('moleHighReset').addEventListener('click', () => {
+  if (confirm('ハイスコアをリセットしますか?')) resetHighScore();
+});
+
+// スコアを web 側の 10x10 だけに描く 3x5 の数字フォント
+// (パネル側はファームウェアのスクロール文字が担当する)
+const MOLE_DIGITS = {
+  '0': ['111', '101', '101', '101', '111'],
+  '1': ['010', '110', '010', '010', '111'],
+  '2': ['111', '001', '111', '100', '111'],
+  '3': ['111', '001', '111', '001', '111'],
+  '4': ['101', '101', '111', '001', '001'],
+  '5': ['111', '100', '111', '001', '111'],
+  '6': ['111', '100', '111', '101', '111'],
+  '7': ['111', '001', '010', '010', '010'],
+  '8': ['111', '101', '111', '101', '111'],
+  '9': ['111', '101', '111', '001', '111'],
+};
+
+let scoreScrollTimer = null;
+
+function stopScoreScroll() {
+  clearInterval(scoreScrollTimer);
+  scoreScrollTimer = null;
+}
+
+function showScoreOnGrid(score, gridCells = moleCells) {
+  stopScoreScroll();
+  // 桁ごとに 3 列 + 空白 1 列の縦ビット列へ変換する
+  const cols = [];
+  for (const ch of String(score)) {
+    const rows = MOLE_DIGITS[ch];
+    for (let x = 0; x < 3; x++) {
+      let col = 0;
+      for (let y = 0; y < 5; y++) {
+        if (rows[y][x] === '1') col |= 1 << y;
+      }
+      cols.push(col);
+    }
+    cols.push(0);
+  }
+  cols.pop();
+  const paintCol = (x, col) => {
+    for (let y = 0; y < 5; y++) {
+      gridCells[(y + 2) * 10 + x].style.background = (col >> y) & 1 ? 'rgb(255,180,0)' : '#000';
+    }
+  };
+  for (const c of gridCells) c.style.background = '#000';
+  if (cols.length <= 10) {
+    const xOff = Math.floor((10 - cols.length) / 2);
+    for (let i = 0; i < cols.length; i++) paintCol(xOff + i, cols[i]);
+    return;
+  }
+  // 収まらない桁数はグリッド上をスクロールさせる
+  let offset = -10;
+  scoreScrollTimer = setInterval(() => {
+    for (let x = 0; x < 10; x++) {
+      const ci = offset + x;
+      paintCol(x, ci >= 0 && ci < cols.length ? cols[ci] : 0);
+    }
+    offset++;
+    if (offset > cols.length) offset = -10;
+  }, 150);
+}
+
+function endMole() {
+  const score = mole.score;
+  stopMole();
+  moleClearBoard();
+  showScoreOnGrid(score);
+  moleStatus.textContent = '終了';
+  const record = score > loadHighScore();
+  if (record) saveHighScore(score);
+  moleScore.textContent = 'スコア: ' + score + ' 点' + (record ? ' ハイスコア更新!' : '');
+  updateHighDisplay();
+  // スコアを流したあと 10 秒でデフォルト表示へ戻す
+  sendScrollText((record ? 'NEW RECORD ' : 'SCORE ') + score, [255, 180, 0], () => {
+    scheduleReturn(10000);
+  });
+}
+
+// 2x2 ブロックの周囲 d マスを囲む枠のセル一覧 (盤面外は除く)
+function ringCells(x0, y0, d) {
+  const cells = [];
+  const x1 = x0 - d;
+  const y1 = y0 - d;
+  const x2 = x0 + 1 + d;
+  const y2 = y0 + 1 + d;
+  for (let x = x1; x <= x2; x++) {
+    for (let y = y1; y <= y2; y++) {
+      if (x !== x1 && x !== x2 && y !== y1 && y !== y2) continue;
+      if (x < 0 || x > 9 || y < 0 || y > 9) continue;
+      cells.push([x, y]);
+    }
+  }
+  return cells;
+}
+
+// 倒した演出。80ms 刻みのフレームで描き、得点率 (早叩き度) に応じて
+// 3 段階に変える。速いほどリングが大きく派手になる。
+// 金モグラはセルごとにランダムな色相の虹色リングにする
+function explode(x0, y0, bonus, factor, done) {
+  const block = blockCells(x0, y0);
+  const ring1 = ringCells(x0, y0, 1);
+  const ring2 = ringCells(x0, y0, 2);
+  const ring3 = ringCells(x0, y0, 3);
+  const paint = (cells, rgb) => {
+    for (const [x, y] of cells) {
+      if (rgb === 'rainbow') {
+        const [r, g, b] = hsvToRGB(Math.random() * 360);
+        molePixel(x, y, r, g, b);
+      } else {
+        molePixel(x, y, rgb[0], rgb[1], rgb[2]);
+      }
+    }
+  };
+  // リングの色も段階で変える。速いほど熱い色 (黄 → 橙 → 暗赤)。
+  // 金モグラはどの段階でも虹色
+  let c;
+  let dim;
+  if (bonus) {
+    c = 'rainbow';
+    dim = 'rainbow';
+  } else if (factor >= 0.8) {
+    c = [255, 255, 0];
+    dim = [120, 60, 0];
+  } else if (factor >= 0.5) {
+    c = [255, 120, 0];
+    dim = [100, 40, 0];
+  } else {
+    c = [140, 0, 0];
+    dim = [60, 0, 0];
+  }
+  let frames;
+  if (factor >= 0.8) {
+    // 満点近く。3 重リングまで広がる大爆発
+    frames = [
+      () => { paint(block, [255, 255, 255]); paint(ring1, c); },
+      () => { paint(ring1, [255, 255, 255]); paint(ring2, c); },
+      () => {
+        paint(block, [0, 0, 0]);
+        paint(ring1, [0, 0, 0]);
+        paint(ring2, [255, 255, 255]);
+        paint(ring3, c);
+      },
+      () => { paint(ring2, [0, 0, 0]); paint(ring3, dim); },
+      () => { paint(ring3, [0, 0, 0]); done(); },
+    ];
+  } else if (factor >= 0.5) {
+    // 中間。2 重リングの標準爆発
+    frames = [
+      () => { paint(block, [255, 255, 255]); paint(ring1, c); },
+      () => { paint(ring1, [255, 255, 255]); paint(ring2, c); },
+      () => {
+        paint(block, [0, 0, 0]);
+        paint(ring1, [0, 0, 0]);
+        paint(ring2, dim);
+      },
+      () => { paint(ring2, [0, 0, 0]); done(); },
+    ];
+  } else {
+    // ぎりぎり。小さくしぼんで消えるだけ
+    frames = [
+      () => paint(block, [255, 255, 255]),
+      () => { paint(block, dim); paint(ring1, dim); },
+      () => {
+        paint(block, [0, 0, 0]);
+        paint(ring1, [0, 0, 0]);
+        done();
+      },
+    ];
+  }
+  let i = 0;
+  const step = () => {
+    if (!mole.running) return;
+    frames[i]();
+    i++;
+    if (i < frames.length) mole.flashTimer = setTimeout(step, 80);
+  };
+  step();
+}
+
+// 描画セルより一回り大きい仮想の当たり判定 (セル数単位)
+const MOLE_HIT_MARGIN = 0.6;
+
+moleGrid.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  if (!mole.running || mole.moles.length === 0) return;
+  // セルの隙間でも反応するよう、グリッド座標を連続値で求める
+  const rect = moleGrid.getBoundingClientRect();
+  const fx = ((e.clientX - rect.left) / rect.width) * 10;
+  const fy = ((e.clientY - rect.top) / rect.height) * 10;
+  if (fx < 0 || fx >= 10 || fy < 0 || fy >= 10) return;
+  const m = mole.moles.find(
+    (o) =>
+      fx >= o.x - MOLE_HIT_MARGIN && fx < o.x + 2 + MOLE_HIT_MARGIN &&
+      fy >= o.y - MOLE_HIT_MARGIN && fy < o.y + 2 + MOLE_HIT_MARGIN
+  );
+  if (m) {
+    // 出現からの経過時間に応じて得点が減っていく (下限は基本点の 1 割)
+    const base = m.bonus ? 30 : 10;
+    const factor = Math.max(0.1, 1 - (performance.now() - m.spawnAt) / MOLE_DECAY_MS);
+    mole.score += Math.round(base * factor);
+    removeMole(m, false);
+    explode(m.x, m.y, m.bonus, factor, redrawMoles);
+  } else {
+    mole.score = Math.max(0, mole.score - 10);
+  }
+  updateMoleInfo();
+});
+
+document.getElementById('moleStart').addEventListener('click', startMole);
+
+// ---- ドッジラン ----
+// 左右 1 列は壁で、内側 8x10 がフィールド。障害物が上から流れてきて、
+// スマホの傾き (または画面の左右タップ、矢印キー) でよける。
+// 速度と障害物の密度は 15 行ごとの段階制で上がっていく。
+// 乱数は障害物の位置だけに使い、進行速度は毎回同じにする。
+
+const RUN_PLAYER_Y = 8;
+const runGrid = document.getElementById('runGrid');
+const runInfo = document.getElementById('runInfo');
+const runStatus = document.getElementById('runStatus');
+const runScore = document.getElementById('runScore');
+const runHigh = document.getElementById('runHigh');
+const runCells = [];
+
+for (let i = 0; i < 100; i++) {
+  const c = document.createElement('div');
+  c.className = 'cell';
+  runGrid.appendChild(c);
+  runCells.push(c);
+}
+
+const RUN_INTRO =
+  'スマホの傾きで左右に動き、流れてくる障害物をよける。進むほど速く、障害物も増える。';
+
+const run = {
+  running: false,
+  counting: false,
+  standby: false,
+  rows: 0,
+  playerX: 3, // フィールド座標 (0-7)
+  field: [],  // 10 行 x 8 列。true が障害物
+  gapX: 4,
+  sinceObstacle: 0,
+  tickTimer: null,
+  moveTimer: null,
+  effectTimer: null,
+};
+
+let tiltGamma = null;
+window.addEventListener('deviceorientation', (e) => {
+  if (e.gamma === null) return;
+  tiltGamma = e.gamma;
+  // イベントが届いている = 許可済みなので、有効化ボタンは要らない
+  runTiltBtn.style.display = 'none';
+});
+
+// iOS 系は傾きセンサーにユーザー操作での許可が必要
+const runTiltBtn = document.getElementById('runTilt');
+if (
+  typeof DeviceOrientationEvent !== 'undefined' &&
+  typeof DeviceOrientationEvent.requestPermission === 'function'
+) {
+  runTiltBtn.style.display = '';
+  runTiltBtn.addEventListener('click', async () => {
+    try {
+      const r = await DeviceOrientationEvent.requestPermission();
+      if (r === 'granted') runTiltBtn.style.display = 'none';
+    } catch (e) {
+      setStatus('傾きセンサーを有効にできません: ' + e.message);
+    }
+  });
+}
+
+// 傾きが使えない環境向けの予備操作
+let runTouchDir = 0;
+runGrid.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  const rect = runGrid.getBoundingClientRect();
+  runTouchDir = e.clientX < rect.left + rect.width / 2 ? -1 : 1;
+});
+window.addEventListener('pointerup', () => { runTouchDir = 0; });
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') runTouchDir = -1;
+  if (e.key === 'ArrowRight') runTouchDir = 1;
+});
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') runTouchDir = 0;
+});
+
+// web セルとパネルの差分描画 (前回フレームと違うセルだけ送る)
+const runFrameCache = new Array(100).fill('');
+
+function runDraw(x, y, r, g, b) {
+  const key = r + ',' + g + ',' + b;
+  const idx = y * 10 + x;
+  if (runFrameCache[idx] === key) return;
+  runFrameCache[idx] = key;
+  // 接続中は手元ではなくパネルを見る想定なので web 側は更新しない
+  if (!rxChar) runCells[idx].style.background = 'rgb(' + key + ')';
+  setPanelPixel(x, y, r, g, b);
+}
+
+function runClearBoard() {
+  dirty.clear();
+  for (const c of panelColors) {
+    c[0] = 0;
+    c[1] = 0;
+    c[2] = 0;
+  }
+  enqueue(new Uint8Array([CMD_CLEAR]));
+  for (const c of runCells) c.style.background = '#000';
+  runFrameCache.fill('0,0,0');
+}
+
+function renderRun() {
+  const fill = Math.min(10, runLevel());
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      if (x === 0 || x === 9) {
+        // 壁はレベルメーター。レベルが上がるたびに下から 1 マスずつ
+        // 緑 → 赤のグラデーション色に変わる
+        const step = 9 - y;
+        if (step < fill) {
+          const [r, g, b] = hsvToRGB(120 - step * 12);
+          runDraw(x, y, r, g, b);
+        } else {
+          runDraw(x, y, 0, 0, 100);
+        }
+      } else if (y === RUN_PLAYER_Y && x - 1 === run.playerX) {
+        runDraw(x, y, 0, 255, 0);
+      } else if (run.field[y][x - 1]) {
+        runDraw(x, y, 255, 0, 0);
+      } else {
+        runDraw(x, y, 0, 0, 0);
+      }
+    }
+  }
+}
+
+function runLevel() {
+  return Math.floor(run.rows / 15);
+}
+
+// 3 マス幅の通り道を ±1 ずつ蛇行させ、残りへ確率で障害物を置く。
+// レベルが低いうちは空行を挟み、上がると毎行になる
+function newRunRow() {
+  const level = runLevel();
+  const every = level < 2 ? 3 : level < 4 ? 2 : 1;
+  const row = new Array(8).fill(false);
+  run.sinceObstacle++;
+  if (run.sinceObstacle < every) return row;
+  run.sinceObstacle = 0;
+  run.gapX = Math.min(6, Math.max(1, run.gapX + Math.floor(Math.random() * 3) - 1));
+  const p = Math.min(0.45, 0.15 + level * 0.05);
+  for (let x = 0; x < 8; x++) {
+    if (Math.abs(x - run.gapX) <= 1) continue;
+    if (Math.random() < p) row[x] = true;
+  }
+  return row;
+}
+
+function updateRunInfo() {
+  runStatus.textContent = run.rows + ' 行 / レベル ' + (runLevel() + 1);
+}
+
+function runTick() {
+  if (!run.running) return;
+  run.field.pop();
+  run.field.unshift(newRunRow());
+  run.rows++;
+  if (run.field[RUN_PLAYER_Y][run.playerX]) {
+    endRun();
+    return;
+  }
+  renderRun();
+  updateRunInfo();
+  const interval = Math.max(160, 500 - runLevel() * 40);
+  run.tickTimer = setTimeout(runTick, interval);
+}
+
+function runMoveTick() {
+  if (!run.running && !run.standby) return;
+  let target = run.playerX;
+  if (runTouchDir !== 0) {
+    target = run.playerX + runTouchDir;
+  } else if (tiltGamma !== null) {
+    // 傾き ±20 度くらいで端から端まで動く
+    target = Math.round(3.5 + tiltGamma / 5);
+  }
+  target = Math.min(7, Math.max(0, target));
+  if (target === run.playerX) return;
+  run.playerX += target > run.playerX ? 1 : -1;
+  if (run.running && run.field[RUN_PLAYER_Y][run.playerX]) {
+    endRun();
+    return;
+  }
+  renderRun();
+  // 待機中に動かしている間はパネルの表示を維持する
+  if (run.standby) scheduleReturn(60000);
+}
+
+function startRun() {
+  stopRun();
+  stopScoreScroll();
+  run.counting = true;
+  runScore.textContent = '';
+  cancelReturnTimer();
+  lastMode = null;
+  panelNeedsSync = true;
+  const seq = ['3', '2', '1'];
+  let i = 0;
+  const step = () => {
+    if (!run.counting) return;
+    runClearBoard();
+    if (i < seq.length) {
+      drawGlyph(seq[i], 2, 1, 255, 255, 255, runDraw);
+      runStatus.textContent = seq[i] + '...';
+      i++;
+      run.effectTimer = setTimeout(step, 700);
+      return;
+    }
+    run.counting = false;
+    runStatus.textContent = 'GO!';
+    beginRun();
+  };
+  step();
+}
+
+function beginRun() {
+  run.running = true;
+  run.rows = 0;
+  // playerX は待機中の位置をそのまま引き継ぐ
+  run.gapX = 4;
+  run.sinceObstacle = 0;
+  run.field = [];
+  for (let y = 0; y < 10; y++) run.field.push(new Array(8).fill(false));
+  runClearBoard();
+  renderRun();
+  run.moveTimer = setInterval(runMoveTick, 60);
+  runTick();
+}
+
+function stopRun() {
+  run.running = false;
+  run.counting = false;
+  run.standby = false;
+  clearTimeout(run.tickTimer);
+  clearInterval(run.moveTimer);
+  clearTimeout(run.effectTimer);
+}
+
+// 接続状態が変わると表示先 (パネル / web) が切り替わるため、
+// 盤面をクリアして現在の状態を描き直す
+function runRefreshDisplay() {
+  if (!run.standby && !run.running && !run.counting) return;
+  runClearBoard();
+  renderRun();
+  if (run.standby) scheduleReturn(60000);
+}
+
+// スタート前の待機状態。壁と自分だけを表示し、傾き操作の練習ができる
+function startRunStandby() {
+  run.standby = true;
+  run.rows = 0;
+  run.field = [];
+  for (let y = 0; y < 10; y++) run.field.push(new Array(8).fill(false));
+  panelNeedsSync = true;
+  runClearBoard();
+  renderRun();
+  run.moveTimer = setInterval(runMoveTick, 60);
+  scheduleReturn(60000);
+}
+
+function resetRunUI() {
+  stopRun();
+  stopScoreScroll();
+  for (const c of runCells) c.style.background = '#000';
+  runFrameCache.fill('');
+  runInfo.textContent = RUN_INTRO;
+  runStatus.textContent = '';
+  runScore.textContent = '';
+  updateRunHighDisplay();
+  startRunStandby();
+}
+
+// 衝突演出のあとスコアを表示して 10 秒でデフォルト表示へ戻す
+function endRun() {
+  const score = run.rows;
+  stopRun();
+  const px = run.playerX + 1;
+  let i = 0;
+  const flash = () => {
+    const on = i % 2 === 0;
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        const x = px + dx;
+        const y = RUN_PLAYER_Y + dy;
+        if (x < 0 || x > 9 || y < 0 || y > 9) continue;
+        if (on) {
+          runDraw(x, y, 255, 0, 0);
+        } else {
+          runDraw(x, y, 0, 0, 0);
+        }
+      }
+    }
+    i++;
+    if (i < 6) {
+      run.effectTimer = setTimeout(flash, 120);
+      return;
+    }
+    finishRun(score);
+  };
+  flash();
+}
+
+const RUN_HIGH_KEY = 'panel25-run-highscore-v1';
+
+function loadRunHigh() {
+  try {
+    return Number(localStorage.getItem(RUN_HIGH_KEY)) || 0;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function saveRunHigh(v) {
+  try {
+    localStorage.setItem(RUN_HIGH_KEY, String(v));
+  } catch (e) {
+    // 保存できない環境では表示だけになる
+  }
+}
+
+function updateRunHighDisplay() {
+  const high = loadRunHigh();
+  runHigh.textContent = high > 0 ? 'ハイスコア: ' + high : '';
+}
+
+updateRunHighDisplay();
+
+document.getElementById('runHighReset').addEventListener('click', () => {
+  if (confirm('ハイスコアをリセットしますか?')) {
+    try {
+      localStorage.removeItem(RUN_HIGH_KEY);
+    } catch (e) {
+      // 消せない環境では何もしない
+    }
+    updateRunHighDisplay();
+  }
+});
+
+function finishRun(score) {
+  runClearBoard();
+  showScoreOnGrid(score, runCells);
+  const record = score > loadRunHigh();
+  if (record) saveRunHigh(score);
+  runScore.textContent = 'スコア: ' + score + (record ? ' ハイスコア更新!' : '');
+  updateRunHighDisplay();
+  runStatus.textContent = '終了';
+  sendScrollText((record ? 'NEW RECORD ' : 'SCORE ') + score, [255, 80, 80], () => {
+    scheduleReturn(10000);
+  });
+}
+
+document.getElementById('runStart').addEventListener('click', startRun);
+</script>
+</body>
+</html>
